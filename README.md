@@ -1,5 +1,11 @@
-# Vue 3 + TypeScript + Vite
+# Vue 后台管理系统简单模板
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+使用 Vue3 + TypeScript + Naive-UI 开发。  
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+---
+
+以下内容截至 2025-09-09
+
+仅是作为简单的示例，供各位在开发类似的应用时作参考。
+
+不排除未来继续开发作为完整后台模板的可能性。
