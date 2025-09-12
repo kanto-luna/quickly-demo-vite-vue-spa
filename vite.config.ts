@@ -8,6 +8,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 export default defineConfig({
+  base: "/quickly-demo-vite-vue-spa/",
   plugins: [vue(), tailwindcss()],
   resolve: {
     alias: {
