@@ -47,6 +47,8 @@ export default defineConfig([
         "allow": ["^[A-Z][A-Z_]*$"]
       }],
       "prefer-const": "error",
+      "vue/multi-word-component-names": "off",
+      "no-unused-vars": "off",
     }
   },
 ])

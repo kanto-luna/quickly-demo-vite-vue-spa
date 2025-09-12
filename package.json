@@ -11,8 +11,15 @@
     "lint": "eslint . --ext .ts,.vue --fix"
   },
   "dependencies": {
+    "@imengyu/vue3-context-menu": "^1.5.2",
+    "@tailwindcss/vite": "^4.1.13",
+    "@vicons/tabler": "^0.13.0",
     "eslint": "^9.35.0",
-    "vue": "^3.5.18"
+    "pinia": "^3.0.3",
+    "pinia-plugin-persistedstate-2": "^2.0.31",
+    "tailwindcss": "^4.1.13",
+    "vue": "^3.5.18",
+    "vue-router": "^4"
   },
   "devDependencies": {
     "@eslint/js": "^9.35.0",
