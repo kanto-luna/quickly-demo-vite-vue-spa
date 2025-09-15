@@ -33,8 +33,8 @@ const phoneFormItemRef = ref<FormItemInst | null>(null)
 const captchaChars = ref("")
 const passwordForm = ref(
   {
-    username: "",
-    password: "",
+    username: "admin",
+    password: "123456",
     captcha: "",
   }
 )

@@ -153,29 +153,29 @@ onMounted(() => {
     <n-layout class="h-full">
       <n-layout-header class="h-[60px]" bordered>
         <div class="h-full flex items-center">
-          <img :src="logo" alt="logo" class="my-[14px] ml-[16px]" />
-          <div class="ml-[16px] text-xl font-[600] select-none">
+          <img :src="logo" alt="logo" class="my-[14px]! ml-[16px]!" />
+          <div class="ml-[16px]! text-xl font-[600] select-none">
             Vue3 后台管理系统
           </div>
-          <n-icon class="ml-[16px] cursor-pointer" size="24px" @click="sideIsCollapsed = !sideIsCollapsed" >  
+          <n-icon class="ml-[16px]! cursor-pointer" size="24px" @click="sideIsCollapsed = !sideIsCollapsed" >  
             <LayoutSidebarLeftCollapse v-if="!sideIsCollapsed" />
             <LayoutSidebarRightCollapse v-else />
           </n-icon>
-          <div class="ml-auto select-none">
+          <div class="ml-auto! select-none">
             <n-input-group>
               <n-input placeholder="请输入搜索内容" />
               <n-button>搜索</n-button>
             </n-input-group>
           </div>
-          <n-icon class="ml-[16px]" size="24px">
+          <n-icon class="ml-[16px]!" size="24px">
             <Backpack />
           </n-icon>
-          <n-icon class="ml-[16px] cursor-pointer" size="24px" @click="theme = theme === 'light' ? 'dark' : 'light'">
+          <n-icon class="ml-[16px]! cursor-pointer" size="24px" @click="theme = theme === 'light' ? 'dark' : 'light'">
             <Sunset v-if="theme === 'light'" />
             <Sunrise v-else />
           </n-icon>
           <n-dropdown trigger="click" :options="userDropdownOptions" @select="handleUserDropdownSelect">
-            <div class="mx-[16px] text-md cursor-pointer select-none">
+            <div class="mx-[16px]! text-md cursor-pointer select-none">
               Kanto Luna
             </div>
           </n-dropdown>
@@ -202,7 +202,7 @@ onMounted(() => {
               :tab="tab.title as string" 
             />
           </n-tabs>
-          <div class="flex-grow-1">
+          <div class="flex-grow-1 overflow-hidden">
             <router-view v-slot="{ Component }">
               <keep-alive :max="10" :include="activateTabPanes.map(tab => tab.name)">
                 <component :is="Component" :key="route.fullPath" />

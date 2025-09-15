@@ -56,7 +56,7 @@ const columns = ref<DataTableColumn<Customer>[]>([
     title: "操作",
     key: "operation",
     width: 220,
-    render: (_row: Customer) => {
+    render: (row) => {
       return h("div", {
         class: "flex items-center gap-[10px]"
       }, [
