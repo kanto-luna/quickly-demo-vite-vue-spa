@@ -12,7 +12,7 @@ import {
   type DataTableColumn,
   type PaginationProps,
 } from "naive-ui"
-import { h, ref } from "vue";
+import { h, ref } from "vue"
 
 type Customer = {
   companyName: string,
@@ -65,6 +65,7 @@ const columns = ref<DataTableColumn<Customer>[]>([
           quaternary: true,
           size: "small",
           onClick: () => {
+            console.debug(_row)
             infoModalShown.value = true
           }
         }, {
@@ -108,7 +109,7 @@ const additionModalShown = ref(false)
 </script>
 
 <template>
-  <div class="h-full flex flex-col p-[10px] gap-[10px] bg-[#F7F8FA]">
+  <div class="h-full flex flex-col p-[10px]! gap-[10px] bg-[#F7F8FA]">
     <n-card>
       <div class="w-full flex items-center">
         <n-form :model="formData" label-placement="left" inline>

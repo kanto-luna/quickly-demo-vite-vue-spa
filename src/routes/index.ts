@@ -50,6 +50,11 @@ const router = createRouter({
               name: "ContractList",
               path: "list",
               component: () => import("@/views/index/contract/ContractList.vue")
+            },
+            {
+              name: "RefusedContractList",
+              path: "refused-list",
+              component: () => import("@/views/index/contract/RefusedContractList.vue")
             }
           ]
         }
@@ -77,9 +82,9 @@ router.beforeEach((to: RouteLocationNormalized, _from: RouteLocationNormalized, 
   if (to.path === "/login" || to.path === "/403" || to.path === "/404") {
     return next()
   }
-  const auth = localStorage.getItem("auth")
-  const token = JSON.parse(auth || "{}").token
-  if (token) {
+  const authStr: string = localStorage.getItem("auth") || "{}"
+  const auth: { token?: string } = JSON.parse(authStr) as { token?: string }
+  if (auth.token) {
     return next()
   } else {
     return next("/403")

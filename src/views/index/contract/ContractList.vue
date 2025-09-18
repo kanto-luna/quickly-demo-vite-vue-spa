@@ -33,9 +33,9 @@ type ContractAvailable = ContractBase & {
 type ContractRunning = ContractBase & {
   status: string
 }
-type ContractClose2Expired = ContractAvailable
-type ContractExpired = ContractAvailable
-type Contract = ContractBase | ContractAvailable | ContractRunning | ContractClose2Expired | ContractExpired
+// type ContractClose2Expired = ContractAvailable
+// type ContractExpired = ContractAvailable
+type Contract = ContractBase | ContractAvailable | ContractRunning    
 
 const currentTab = ref<string>("available")
 const form = ref<{[key: string]: string}>({
@@ -55,7 +55,7 @@ const availableContractsColumns = ref<DataTableColumns<Contract>>([
   {
     key: "operations",
     title: "操作",
-    render(row: Contract, _index: number) {
+    render(row: Contract) {
       return h("div", {
         class: "flex items-center gap-2"
       }, [
@@ -83,7 +83,7 @@ const runningContractsColumns = ref<DataTableColumns<Contract>>([
   {
     key: "operations",
     title: "操作",
-    render(row: Contract, _index: number) {
+    render(row: Contract) {
       return h("div", {
         class: "flex items-center gap-2"
       }, [
@@ -112,7 +112,7 @@ const close2expiredContractsColumns = ref<DataTableColumns<Contract>>([
   {
     key: "operations",
     title: "操作",
-    render(row: Contract, _index: number) {
+    render(row: Contract) {
       return h("div", {
         class: "flex items-center gap-2"
       }, [
@@ -141,7 +141,7 @@ const expiredContractsColumns = ref<DataTableColumns<Contract>>([
   {
     key: "operations",
     title: "操作",
-    render(row: Contract, _index: number) {
+    render(row: Contract) {
       return h("div", {
         class: "flex items-center gap-2"
       }, [
@@ -225,20 +225,20 @@ const handleTabUpdate = (key: string) => {
     case "available":
       columns.value = availableContractsColumns.value
       data.value = availableContractsData.value
-      break;
+      break
     case "running":
       columns.value = runningContractsColumns.value
       data.value = runningContractsData.value
-      break;
+      break
     case "close2expired":
       columns.value = close2expiredContractsColumns.value
       data.value = close2expiredContractsData.value
-      break;
+      break
     case "expired":
     default:
       columns.value = expiredContractsColumns.value
       data.value = expiredContractsData.value
-      break;
+      break
   }
 }
 
@@ -249,7 +249,7 @@ onMounted(() => {
 
 <template>
   <!-- 标签只切换表单，表格使用数据源和列源来控制 -->
-  <div class="h-full flex flex-col gap-[10px] p-[10px] bg-[#F7F8FA]">
+  <div class="h-full flex flex-col gap-[10px] p-[10px]! bg-[#F7F8FA]">
     <n-card>
       <n-tabs v-model:value="currentTab" :on-update:value="handleTabUpdate" animated>
         <n-tab-pane name="available" tab="有效合同">

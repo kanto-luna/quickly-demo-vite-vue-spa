@@ -180,9 +180,9 @@ const generatePhoneCaptcha = () => {
   generateCaptcha(phoneCaptchaCanvas)
 }
 
-const handleGetPhoneCaptcha = () => {
+const handleGetPhoneCaptcha = async () => {
   if (!phoneIsValid(phoneCaptchaForm.value.phone)) {
-    phoneFormItemRef.value?.validate()
+    await phoneFormItemRef.value?.validate()
     _m.error("请输入正确的手机号")
     return
   }
@@ -234,7 +234,7 @@ const handlePasswordLogin = () => {
 
 const handlePhoneLogin = () => {
   phoneFormRef.value?.validate().then(async () => {
-    phoneCaptchaOtpFormRef.value?.validate().then(async () => {
+    await phoneCaptchaOtpFormRef.value?.validate().then(async () => {
       // TODO: api verify phone and phoneCaptcha
       authStore.setToken("123456")
       authStore.setUser({
@@ -243,6 +243,9 @@ const handlePhoneLogin = () => {
         role: "admin"
       })
       await router.push("/")
+    }).catch((error: Error) => {
+      // _m.error(error.message)
+      console.error(error)
     })
   }).catch((error: Error) => {
     // _m.error(error.message)

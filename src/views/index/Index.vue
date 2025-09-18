@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref } from "vue"
 import { 
   NLayout, 
   NLayoutSider, 
@@ -14,25 +14,25 @@ import {
   NTabs,
   NTab,
   useMessage,
-} from 'naive-ui'
+} from "naive-ui"
 import { 
   LayoutSidebarLeftCollapse, 
   LayoutSidebarRightCollapse,
   Backpack,
   Sunset,
   Sunrise,
-} from '@vicons/tabler'
-import { useRoute, useRouter } from 'vue-router'
+} from "@vicons/tabler"
+import { useRoute, useRouter } from "vue-router"
 
 import logo from "@/assets/vue.svg"
-import type { Menu } from '@/defined/auth' 
+import type { Menu } from "@/defined/auth" 
 
 const _m = useMessage()
 const route = useRoute()
 const router = useRouter()
 
 const sideIsCollapsed = ref(false)
-const theme = ref('light')
+const theme = ref("light")
 const userDropdownOptions = ref([
   { label: "个人信息", key: "info" },
   { label: "退出登录", key: "logout" },
@@ -57,20 +57,21 @@ const menuOptions = ref<Menu[]>([
     component: "/src/views/index/contract/Contract.vue",
     children: [
       { label: "合同列表", key: "contract-list", path: "/contract/list", name: "ContractList", component: "/src/views/index/contract/ContractList.vue" },
+      { label: "驳回合同", key: "contract-refused-list", path: "/contract/refused-list", name: "RefusedContractList", component: "/src/views/index/contract/RefusedContractList.vue" },
     ],
   },
 ])
 const currentTab = ref("home")
 const activateTabPanes = ref<Menu[]>([])
 
-const handleUserDropdownSelect = (key: string) => {
+const handleUserDropdownSelect = async (key: string) => {
   switch (key) {
     case "info":
       break
     case "logout":
     default:
       localStorage.removeItem("auth")
-      router.push("/login")
+      await router.push("/login")
       break
   }
 }
@@ -93,12 +94,12 @@ const recursivelyFindTabFromMenuOpts = (sources: Menu[], key: string, whichCol: 
   return null
 }
 
-const handleMenuSelect = (key: string) => {
-  let activateTab = activateTabPanes.value.find(tab => tab.key === key)
+const handleMenuSelect = async (key: string) => {
+  const activateTab = activateTabPanes.value.find(tab => tab.key === key)
   if (activateTab) {
     currentTab.value = key
-    router.push(activateTab.path as string)
-    return;
+    await router.push(activateTab.path)
+    return
   }
   const menu = recursivelyFindTabFromMenuOpts(menuOptions.value, key)
   if (menu) {
@@ -106,28 +107,28 @@ const handleMenuSelect = (key: string) => {
       title: menu.label || menu.name,
       ...menu,
     })
-    router.push(menu.path as string)
+    await router.push(menu.path)
   }
   currentTab.value = key
 }
 
-const handleTabClose = (key: string) => {
+const handleTabClose = async (key: string) => {
   console.debug(key)
   if (activateTabPanes.value.length === 1) {
     _m.warning("至少保留一个标签页")
-    return;
+    return
   }
   activateTabPanes.value = activateTabPanes.value.filter(tab => tab.key !== key)
-  const tab = activateTabPanes.value[activateTabPanes.value.length - 1]!
+  const tab = activateTabPanes.value[activateTabPanes.value.length - 1]
   currentTab.value = tab.key as string
-  router.push(tab.path as string)
+  await router.push(tab.path)
 }
 
-const handleTabChange = (key: string) => {
+const handleTabChange = async (key: string) => {
   currentTab.value = key
   const tab = activateTabPanes.value.find(tab => tab.key === key)
   if (tab) {
-    router.push(tab.path as string)
+    await router.push(tab.path)
   }
 }
 
@@ -137,7 +138,7 @@ const initPage = () => {
   if (tab) {
     activateTabPanes.value.push({ ...tab, title: tab.label || tab.name })
     currentTab.value = tab.key as string
-    return;
+    return
   }
   activateTabPanes.value.push({ key: "home", title: "工作台", name: "Home", path: "/home", component: "/src/views/index/home/Home.vue" })
   currentTab.value = "home"

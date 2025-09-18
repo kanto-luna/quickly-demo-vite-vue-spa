@@ -2,8 +2,8 @@
 import { 
   NCard,
   NDataTable,
-} from 'naive-ui'
-import { onMounted, onUnmounted, ref } from 'vue'
+} from "naive-ui"
+import { onMounted, onUnmounted, ref } from "vue"
 
 // off-duty time
 const offDutyTime = new Date() 
@@ -70,9 +70,9 @@ const initCountDown = () => {
       clearInterval(timer)
       return
     }
-    const hours = Math.floor(diff / (1000 * 60 * 60)).toString().padStart(2, '0')
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0')
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0')
+    const hours = Math.floor(diff / (1000 * 60 * 60)).toString().padStart(2, "0")
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, "0")
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, "0")
     offDutyCountDown.value = `${hours}:${minutes}:${seconds}`
   }, 1000)
 }
@@ -109,7 +109,7 @@ onUnmounted(() => {
       </div>
       <!-- 主要数据看板 -->
       <div class="flex gap-[10px]">
-        <n-card v-for="(value, index) in totalCounts" class="bg-[#FFFFFF] text-[#101010]" :class="index % 2 === 0 ? 'bg-[#141F1B]! text-[#84CAAD]!' : ''">
+        <n-card v-for="(value, index) in totalCounts" :key="index" class="bg-[#FFFFFF] text-[#101010]" :class="index % 2 === 0 ? 'bg-[#141F1B]! text-[#84CAAD]!' : ''">
           <div class="flex justify-between items-center">
             <div>{{ value.label }}</div>
             <div class="text-[24px]">{{ value.value }}</div>
