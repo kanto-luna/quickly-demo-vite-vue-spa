@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { 
   NCard,
-  NInput,
   NButton,
   NDataTable,
   NForm,
@@ -11,6 +10,11 @@ import type { PropType } from "vue"
 import type { FormItems, TableProps } from "@/defined/component-prop"
 
 const props = defineProps({
+  formValues: {
+    type: Object as PropType<any>,
+    required: false,
+    default: () => ({})
+  },
   formItems: {
     type: Array as PropType<FormItems>,
     required: false,
@@ -30,21 +34,30 @@ const props = defineProps({
     })
   }
 })
+const emits = defineEmits(["search", "reset"])
+
+const handleSearch = () => {
+  emits("search")
+}
+
+const handleReset = () => {
+  emits("reset")
+}
 </script>
 
 <template>
   <div class="w-full h-full flex flex-col gap-[10px] p-[10px]!">
     <!-- 数据表单 -->
     <n-card>
-      <div class="w-full flex items-center">
+      <div class="w-full flex items-center gap-[10px]">
         <n-form label-placement="left" class="flex-grow-1 flex-wrap" inline>
           <n-form-item v-for="item in props.formItems" :key="`form-item-${item.label}`" :label="item.label" class="flex-grow-1 flex-shrink-0 min-w-[100px] max-w-[30%]">
-            <component :is="item.component" />
+            <component :is="item.component" v-model:value="props.formValues[item.key as string]" />
           </n-form-item>
         </n-form>
         <div class="flex-shrink-0 flex gap-[10px] min-w-[100px]">
-          <n-button type="primary">查询</n-button>
-          <n-button>重置</n-button>
+          <n-button type="primary" @click="handleSearch">查询</n-button>
+          <n-button @click="handleReset">重置</n-button>
         </div>
       </div>
     </n-card>

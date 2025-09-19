@@ -3,6 +3,7 @@ import type { DataTableColumns, PaginationProps } from "naive-ui"
 
 // 表单项
 export type FormItem = {
+  key: string
   label: string
   component: Component
 }

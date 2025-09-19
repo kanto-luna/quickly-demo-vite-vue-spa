@@ -1,0 +1,12 @@
+name: quickly-demo-vite-vue-spa
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: quickly-demo-vite-vue-spa
+    ports:
+      - '92:92'
+    volumes:
+      - .:/app

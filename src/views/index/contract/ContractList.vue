@@ -9,33 +9,17 @@ import {
   NForm,
   NFormItem,
   NInput,
-  NModal,
   NTimeline,
   NTimelineItem,
   NIcon,
   type DataTableColumns,
   type PaginationProps,
 } from "naive-ui"
+import { LayLayer } from "@layui/layer-vue"
 import { h } from "vue"
-import { onMounted, ref } from "vue"
+import { onMounted, ref } from "vue" 
 
-type ContractBase = {
-  id: string
-  companyName: string
-  industry: string
-  employeeName: string
-}
-type ContractAvailable = ContractBase & {
-  code: string
-  startAt: string
-  expiredAt: string
-}
-type ContractRunning = ContractBase & {
-  status: string
-}
-// type ContractClose2Expired = ContractAvailable
-// type ContractExpired = ContractAvailable
-type Contract = ContractBase | ContractAvailable | ContractRunning    
+import type { Contract } from "@/defined/contract"
 
 const currentTab = ref<string>("available")
 const form = ref<{[key: string]: string}>({
@@ -333,17 +317,17 @@ onMounted(() => {
     <n-card class="flex-grow-1">
       <n-data-table :columns="columns" :data="data" :pagination="pagination" class="h-full" />
     </n-card>
-    <n-modal v-model:show="infoModalShown" draggable>
-      <template #default="{ draggableClass }">
-        <div class="w-[800px]">
+    <lay-layer v-model:model-value="infoModalShown" title="合同详情" resize>
+      <template #default>
+        <div class="min-w-[800px] w-full">
           <n-card>
-            <div class="w-full flex items-center gap-[10px]" :class="draggableClass">
+            <div class="w-full flex items-center gap-[10px]">
               <n-icon class="cursor-pointer" @click="infoModalShown = false">
                 <ArrowBackUp />
               </n-icon>
               <span class="text-[#4E5969] cursor-pointer" @click="infoModalShown = false">返回</span>
             </div>
-            <n-timeline class="w-full mt-[20px] select-none" horizontal>
+            <n-timeline class="w-full mt-[20px]! select-none" horizontal>
               <n-timeline-item 
                 type="success"
                 title="合同资料上传"
@@ -365,9 +349,9 @@ onMounted(() => {
               <n-timeline-item 
                 type="success"
                 title="正式合作"
-                />
+              />
             </n-timeline>
-            <div class="w-full grid grid-cols-2 grid-rows-2 gap-[20px] my-[20px]">
+            <div class="w-full grid grid-cols-2 grid-rows-2 gap-[20px] my-[20px]!">
               <div class="col-start-1 col-end-2 row-start-1 row-end-2 flex description">
                 <label>合同编码</label>
                 <span>C202509120001</span>
@@ -389,10 +373,10 @@ onMounted(() => {
               <label>合同内容</label>
               <embed class="flex-grow-1" src="https://philpapers.org/archive/sinpg" />
             </div>
-          </n-card> 
+          </n-card>
         </div>
       </template>
-    </n-modal>
+    </lay-layer>
   </div>
 </template>
 

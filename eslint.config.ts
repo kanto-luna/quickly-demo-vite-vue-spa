@@ -49,6 +49,8 @@ export default defineConfig([
       "prefer-const": "error",
       "vue/multi-word-component-names": "off",
       "no-unused-vars": "off",
+      "vue/no-mutating-props": "off",
+      "@typescript-eslint/no-explicit-any": "off",
     }
   },
 ])
