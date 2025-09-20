@@ -55,7 +55,32 @@ const router = createRouter({
               name: "RefusedContractList",
               path: "refused-list",
               component: () => import("@/views/index/contract/RefusedContractList.vue")
-            }
+            },
+            {
+              name: "PreUploadContractList",
+              path: "pre-upload-list",
+              component: () => import("@/views/index/contract/PreUploadContractList.vue")
+            },
+            {
+              name: "PreConfirmedContractList",
+              path: "pre-confirmed-list",
+              component: () => import("@/views/index/contract/PreConfirmedContractList.vue")
+            },
+            {
+              name: "PreCensoredContractList",
+              path: "pre-censored-list",
+              component: () => import("@/views/index/contract/PreCensoredContractList.vue")
+            },
+            {
+              name: "PreSignedContractList",
+              path: "pre-signed-list",
+              component: () => import("@/views/index/contract/PreSignedContractList.vue")
+            },
+            {
+              name: "ContractTemplateList",
+              path: "template-list",
+              component: () => import("@/views/index/contract/ContractTemplateList.vue")
+            },
           ]
         }
       ],

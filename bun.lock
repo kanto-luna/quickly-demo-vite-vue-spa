@@ -4,9 +4,9 @@
     "": {
       "name": "app-manager-client",
       "dependencies": {
-        "@imengyu/vue3-context-menu": "^1.5.2",
         "@layui/layer-vue": "^2.4.8",
         "@tailwindcss/vite": "^4.1.13",
+        "@vicons/fluent": "^0.13.0",
         "@vicons/tabler": "^0.13.0",
         "eslint": "^9.35.0",
         "pinia": "^3.0.3",
@@ -124,10 +124,6 @@
     "@humanwhocodes/module-importer": ["@humanwhocodes/module-importer@1.0.1", "https://registry.npmmirror.com/@humanwhocodes/module-importer/-/module-importer-1.0.1.tgz", {}, "sha512-bxveV4V8v5Yb4ncFTT3rPSgZBOpCkjfK0y4oVVVJwIuDVBRMDXrPyXRL988i5ap9m9bnyEEjWfm5WkBmtffLfA=="],
 
     "@humanwhocodes/retry": ["@humanwhocodes/retry@0.4.3", "https://registry.npmmirror.com/@humanwhocodes/retry/-/retry-0.4.3.tgz", {}, "sha512-bV0Tgo9K4hfPCek+aMAn81RppFKv2ySDQeMoSZuvTASywNTnVJCArCZE2FWqpvIatKu7VMRLWlR1EazvVhDyhQ=="],
-
-    "@imengyu/vue-scroll-rect": ["@imengyu/vue-scroll-rect@0.1.7", "https://registry.npmmirror.com/@imengyu/vue-scroll-rect/-/vue-scroll-rect-0.1.7.tgz", {}, "sha512-a1ysL8LV2iFcHzMJ6tlrqr8JKtYIBrb1U3XcbjNmhponENUSbRvxs4b1sJd5sXdCFIIkDydwQM/SjVhfT7uBUw=="],
-
-    "@imengyu/vue3-context-menu": ["@imengyu/vue3-context-menu@1.5.2", "https://registry.npmmirror.com/@imengyu/vue3-context-menu/-/vue3-context-menu-1.5.2.tgz", { "dependencies": { "@imengyu/vue-scroll-rect": "^0.1.4" } }, "sha512-JtM9y4JKsqwpsLQnK38Fm3DqV5ZwIs/HksxQYHU6yUuuWScdr5C+NTF16J0KxmSbMHOTwVTMwJCBkwcC1X6y1w=="],
 
     "@isaacs/fs-minipass": ["@isaacs/fs-minipass@4.0.1", "https://registry.npmmirror.com/@isaacs/fs-minipass/-/fs-minipass-4.0.1.tgz", { "dependencies": { "minipass": "^7.0.4" } }, "sha512-wgm9Ehl2jpeqP3zw/7mo3kRHFp5MEDhqAdwy1fTGkHAwnkGOVsgpvQhL8B5n1qlb01jV3n/bI0ZfZp5lWA1k4w=="],
 
@@ -258,6 +254,8 @@
     "@typescript-eslint/utils": ["@typescript-eslint/utils@8.43.0", "https://registry.npmmirror.com/@typescript-eslint/utils/-/utils-8.43.0.tgz", { "dependencies": { "@eslint-community/eslint-utils": "^4.7.0", "@typescript-eslint/scope-manager": "8.43.0", "@typescript-eslint/types": "8.43.0", "@typescript-eslint/typescript-estree": "8.43.0" }, "peerDependencies": { "eslint": "^8.57.0 || ^9.0.0", "typescript": ">=4.8.4 <6.0.0" } }, "sha512-S1/tEmkUeeswxd0GGcnwuVQPFWo8NzZTOMxCvw8BX7OMxnNae+i8Tm7REQen/SwUIPoPqfKn7EaZ+YLpiB3k9g=="],
 
     "@typescript-eslint/visitor-keys": ["@typescript-eslint/visitor-keys@8.43.0", "https://registry.npmmirror.com/@typescript-eslint/visitor-keys/-/visitor-keys-8.43.0.tgz", { "dependencies": { "@typescript-eslint/types": "8.43.0", "eslint-visitor-keys": "^4.2.1" } }, "sha512-T+S1KqRD4sg/bHfLwrpF/K3gQLBM1n7Rp7OjjikjTEssI2YJzQpi5WXoynOaQ93ERIuq3O8RBTOUYDKszUCEHw=="],
+
+    "@vicons/fluent": ["@vicons/fluent@0.13.0", "", {}, "sha512-bYGZsOE3qzvm3Cm43e7tybgGlr5ZUpYqtRZq0g0Tfupe8jIzLolpvQLNUt1zS8Mgt6goTbUk5YH7Fkv16jkykg=="],
 
     "@vicons/tabler": ["@vicons/tabler@0.13.0", "https://registry.npmmirror.com/@vicons/tabler/-/tabler-0.13.0.tgz", {}, "sha512-AykuhiqjszkIoAL/7knIFm6RDOBS1ZmQdJfQ+RNLEah0fVsxykUFCfMBSNZh8lOzC85EtdD1k5g/sv5GYk0Ohg=="],
 

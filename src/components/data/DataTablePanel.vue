@@ -32,7 +32,7 @@ const props = defineProps({
         pageCount: 1,
       },
     })
-  }
+  },
 })
 const emits = defineEmits(["search", "reset"])
 
@@ -46,7 +46,7 @@ const handleReset = () => {
 </script>
 
 <template>
-  <div class="w-full h-full flex flex-col gap-[10px] p-[10px]!">
+  <div class="w-full h-full flex flex-col gap-[10px] p-[10px]! bg-[#F7F8FA]">
     <!-- 数据表单 -->
     <n-card>
       <div class="w-full flex items-center gap-[10px]">

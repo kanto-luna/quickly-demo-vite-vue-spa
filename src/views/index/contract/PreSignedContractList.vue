@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { NInput, NButton } from "naive-ui"
 import { h, ref } from "vue"
 import type { Ref } from "vue"
+import { NInput, NButton } from "naive-ui"
 
 import DataTablePanel from "@/components/data/DataTablePanel.vue"
 import type { FormItems, TableProps } from "@/defined/component-prop"
-import type { RefusedContract } from "@/defined/contract"
+import type { ContractBase } from "@/defined/contract"
 
 type FormValues = {
   companyName: string
@@ -20,6 +20,7 @@ const formValues: Ref<FormValues> = ref<FormValues>({
   id: "",
   status: "",
 })
+
 const formItems: Ref<FormItems> = ref<FormItems>([
   {
     key: "companyName",
@@ -50,7 +51,8 @@ const formItems: Ref<FormItems> = ref<FormItems>([
     })
   }
 ])
-const tableProps: Ref<TableProps<RefusedContract>> = ref({
+
+const tableProps: Ref<TableProps<ContractBase>> = ref({
   columns: [
     {
       key: "id", title: "编号",
@@ -62,17 +64,14 @@ const tableProps: Ref<TableProps<RefusedContract>> = ref({
       key: "industry", title: "所属行业",
     },
     {
-      key: "refusedReason", title: "驳回理由",
-    },
-    {
-      key: "refusedAt", title: "驳回时间",
-    },
-    {
       key: "employeeName", title: "所属销售",
     },
     {
+      key: "signedAt", title: "签署时间",
+    },
+    {
       key: "operations", title: "操作",
-      render: (row: RefusedContract) => {
+      render: (row: ContractBase) => {
         return h("div", {
           class: "flex items-center gap-2"
         }, [
@@ -84,7 +83,7 @@ const tableProps: Ref<TableProps<RefusedContract>> = ref({
   data: [],
   pagination: {
     page: 1,
-    pageSize: 1,
+    pageSize: 10,
     pageCount: 1,
   }
 })

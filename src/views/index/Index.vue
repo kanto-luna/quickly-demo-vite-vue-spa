@@ -22,9 +22,11 @@ import {
   Sunset,
   Sunrise,
 } from "@vicons/tabler"
+import { FullScreenMaximize24Filled, FullScreenMinimize24Filled } from "@vicons/fluent"
 import { useRoute, useRouter } from "vue-router"
 
 import logo from "@/assets/vue.svg"
+import { isFullScreen, elementFullScreen, exitFullScreen } from "@/utils/ui/fullscreen"
 import type { Menu } from "@/defined/auth" 
 
 const _m = useMessage()
@@ -58,11 +60,17 @@ const menuOptions = ref<Menu[]>([
     children: [
       { label: "合同列表", key: "contract-list", path: "/contract/list", name: "ContractList", component: "/src/views/index/contract/ContractList.vue" },
       { label: "驳回合同", key: "contract-refused-list", path: "/contract/refused-list", name: "RefusedContractList", component: "/src/views/index/contract/RefusedContractList.vue" },
+      { label: "上传合同", key: "contract-pre-upload-list", path: "/contract/pre-upload-list", name: "PreUploadContractList", component: "/src/views/index/contract/PreUploadContractList.vue" },
+      { label: "审核合同", key: "contract-pre-censored-list", path: "/contract/pre-censored-list", name: "PreCensoredContractList", component: "/src/views/index/contract/PreCensoredContractList.vue" },
+      { label: "签批合同", key: "contract-pre-confirmed-list", path: "/contract/pre-confirmed-list", name: "PreConfirmedContractList", component: "/src/views/index/contract/PreConfirmedContractList.vue" },
+      { label: "签署合同", key: "contract-pre-signed-list", path: "/contract/pre-signed-list", name: "PreSignedContractList", component: "/src/views/index/contract/PreSignedContractList.vue" },
+      { label: "合同模板", key: "contract-template-list", path: "/contract/template-list", name: "ContractTemplateList", component: "/src/views/index/contract/ContractTemplateList.vue" },
     ],
   },
 ])
 const currentTab = ref("home")
 const activateTabPanes = ref<Menu[]>([])
+const contentRef = ref<HTMLElement | null>(null)
 
 const handleUserDropdownSelect = async (key: string) => {
   switch (key) {
@@ -124,6 +132,17 @@ const handleTabClose = async (key: string) => {
   await router.push(tab.path)
 }
 
+const handleFullScreenToggle = () => {
+  if (!contentRef.value) {
+    return;
+  }
+  if (isFullScreen()) {
+    exitFullScreen()
+  } else {
+    elementFullScreen(contentRef.value)
+  }
+}
+
 const handleTabChange = async (key: string) => {
   currentTab.value = key
   const tab = activateTabPanes.value.find(tab => tab.key === key)
@@ -168,6 +187,12 @@ onMounted(() => {
               <n-button>搜索</n-button>
             </n-input-group>
           </div>
+          <n-icon class="ml-[16px]! cursor-pointer" size="24px" v-show="isFullScreen" @click="handleFullScreenToggle">
+            <FullScreenMaximize24Filled />
+          </n-icon>
+          <n-icon class="ml-[16px]! cursor-pointer" size="24px" v-show="!isFullScreen" @click="handleFullScreenToggle">  
+            <FullScreenMinimize24Filled />
+          </n-icon>
           <n-icon class="ml-[16px]!" size="24px">
             <Backpack />
           </n-icon>
@@ -203,7 +228,7 @@ onMounted(() => {
               :tab="tab.title as string" 
             />
           </n-tabs>
-          <div class="flex-grow-1 overflow-hidden">
+          <div class="flex-grow-1 overflow-hidden" ref="contentRef">
             <router-view v-slot="{ Component }">
               <keep-alive :max="10" :include="activateTabPanes.map(tab => tab.name)">
                 <component :is="Component" :key="route.fullPath" />
