@@ -132,12 +132,12 @@ const handleTabClose = async (key: string) => {
   await router.push(tab.path)
 }
 
-const handleFullScreenToggle = () => {
+const handleFullScreenToggle = async () => {
   if (!contentRef.value) {
-    return;
+    return
   }
   if (isFullScreen()) {
-    exitFullScreen()
+    await exitFullScreen()
   } else {
     elementFullScreen(contentRef.value)
   }

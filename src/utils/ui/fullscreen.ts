@@ -15,9 +15,9 @@ export function elementFullScreen(element: HTMLElement, success?: () => void, er
   })
 }
 
-export function exitFullScreen(): void {
+export async function exitFullScreen(): Promise<void> {
   if (isFullScreen()) {
-    document.exitFullscreen()
+    await document.exitFullscreen()
   }
 }
 

@@ -1,229 +1,283 @@
 <script lang="ts" setup>
-import { ArrowBackUp } from "@vicons/tabler"
 import {
-  NDataTable,
   NTabs,
   NTabPane,
   NButton,
-  NCard,
-  NForm,
-  NFormItem,
   NInput,
-  NTimeline,
-  NTimelineItem,
-  NIcon,
-  type DataTableColumns,
-  type PaginationProps,
 } from "naive-ui"
-import { LayLayer } from "@layui/layer-vue"
 import { h } from "vue"
-import { onMounted, ref } from "vue" 
+import { onMounted, ref } from "vue"
 
+import DataTablePanel from "@/components/data/DataTablePanel.vue"
+import ContractDescLayer from "./layer/ContractDescLayer.vue"
 import type { Contract } from "@/defined/contract"
+import type { FormItems, TableProps } from "@/defined/component-prop"
 
-const currentTab = ref<string>("available")
-const form = ref<{[key: string]: string}>({
-  companyName: "",
-  employeeName: "",
-  contractId: "",
-  contractStatus: "",
+const availableContractsFormItems = ref<FormItems>([
+  {
+    key: "companyName",
+    label: "企业名称",
+    component: NInput,
+  },
+  {
+    key: "employeeName",
+    label: "所属销售",
+    component: NInput,
+  },
+  {
+    key: "code",
+    label: "合同编号",
+    component: NInput,
+  }
+])
+const runningContractsFormItems = ref<FormItems>([
+  {
+    key: "companyName",
+    label: "企业名称",
+    component: NInput,
+  },
+  {
+    key: "employeeName",
+    label: "所属销售",
+    component: NInput,
+  },
+  {
+    key: "status",
+    label: "合同状态",
+    component: NInput,
+  }
+])
+const close2expiredContractsFormItems = ref<FormItems>([
+  {
+    key: "companyName",
+    label: "企业名称",
+    component: NInput,
+  },
+  {
+    key: "employeeName",
+    label: "所属销售",
+    component: NInput,
+  },
+  {
+    key: "status",
+    label: "合同状态",
+    component: NInput,
+  }
+])
+const expiredContractsFormItems = ref<FormItems>([
+  {
+    key: "companyName",
+    label: "企业名称",
+    component: NInput,
+  },
+  {
+    key: "employeeName",
+    label: "所属销售",
+    component: NInput,
+  },
+  {
+    key: "status",
+    label: "合同状态",
+    component: NInput,
+  }
+])
+const availableContractsTableProps = ref<TableProps<Contract>>({
+  columns: [
+    { key: "companyName", title: "企业名称" },
+    { key: "employeeName", title: "所属销售" },
+    { key: "code", title: "合同编号" },
+    { key: "industry", title: "行业" },
+    { key: "startAt", title: "开始时间" },
+    { key: "expiredAt", title: "到期时间" },
+    {
+      key: "operations",
+      title: "操作",
+      render(row: Contract) {
+        return h("div", {
+          class: "flex items-center gap-2"
+        }, [
+          h(NButton, {
+            type: "info",
+            quaternary: true,
+            size: "small",
+            onClick: () => {
+              console.debug(row)
+              infoModalShown.value = true
+            }
+          }, {
+            default: () => "查看"
+          }),
+        ])
+      }
+    }
+  ],
+  data: [
+    {
+      id: "1",
+      companyName: "康多公司",
+      employeeName: "张三",
+      industry: "电子科技",
+      code: "C202509120001",
+      startAt: "2025-09-12",
+      expiredAt: "2025-10-12",
+    },
+  ],
+  pagination: {
+    page: 1,
+    pageSize: 10,
+    pageCount: 1,
+  },
 })
-const columns = ref<DataTableColumns<Contract>>([])
-const availableContractsColumns = ref<DataTableColumns<Contract>>([
-  { key: "companyName", title: "企业名称" },
-  { key: "employeeName", title: "所属销售" },
-  { key: "code", title: "合同编号" },
-  { key: "industry", title: "行业" },
-  { key: "startAt", title: "开始时间" },
-  { key: "expiredAt", title: "到期时间" },
-  {
-    key: "operations",
-    title: "操作",
-    render(row: Contract) {
-      return h("div", {
-        class: "flex items-center gap-2"
-      }, [
-        h(NButton, {
-          type: "info",
-          quaternary: true,
-          size: "small",
-          onClick: () => {
-            console.debug(row)
-            infoModalShown.value = true
-          }
-        }, {
-          default: () => "查看"
-        }),
-      ])
+const runningContractsTableProps = ref<TableProps<Contract>>({
+  columns: [
+    { key: "companyName", title: "企业名称" },
+    { key: "employeeName", title: "所属销售" },
+    { key: "industry", title: "行业" },
+    { key: "code", title: "合同编号" },
+    { key: "status", title: "合同状态" },
+    {
+      key: "operations",
+      title: "操作",
+      render(row: Contract) {
+        return h("div", {
+          class: "flex items-center gap-2"
+        }, [
+          h(NButton, {
+            type: "info",
+            quaternary: true,
+            size: "small",
+            onClick: () => {
+              console.debug(row)
+              infoModalShown.value = true
+            }
+          }, {
+            default: () => "查看"
+          }),
+        ])
+      }
     }
-  }
-])
-const runningContractsColumns = ref<DataTableColumns<Contract>>([
-  { key: "companyName", title: "企业名称" },
-  { key: "employeeName", title: "所属销售" },
-  { key: "industry", title: "行业" },
-  { key: "code", title: "合同编号" },
-  { key: "status", title: "合同状态" },
-  {
-    key: "operations",
-    title: "操作",
-    render(row: Contract) {
-      return h("div", {
-        class: "flex items-center gap-2"
-      }, [
-        h(NButton, {
-          type: "info",
-          quaternary: true,
-          size: "small",
-          onClick: () => {
-            console.debug(row)
-            infoModalShown.value = true
-          }
-        }, {
-          default: () => "查看"
-        }),
-      ])
+  ],
+  data: [
+    
+  ],
+  pagination: {
+    page: 1,
+    pageSize: 10,
+    pageCount: 1,
+  },
+})
+const close2expiredContractsTableProps = ref<TableProps<Contract>>({
+  columns: [
+    { key: "companyName", title: "企业名称" },
+    { key: "employeeName", title: "所属销售" },
+    { key: "code", title: "合同编号" },
+    { key: "status", title: "合同状态" },
+    { key: "startAt", title: "开始时间" },
+    { key: "expiredAt", title: "到期时间" },
+    {
+      key: "operations",
+      title: "操作",
+      render(row: Contract) {
+        return h("div", {
+          class: "flex items-center gap-2"
+        }, [
+          h(NButton, {
+            type: "info",
+            quaternary: true,
+            size: "small",
+            onClick: () => {
+              console.debug(row)
+              infoModalShown.value = true
+            }
+          }, {
+            default: () => "查看"
+          }),
+        ])
+      }
     }
-  }
-])
-const close2expiredContractsColumns = ref<DataTableColumns<Contract>>([
-  { key: "companyName", title: "企业名称" },
-  { key: "employeeName", title: "所属销售" },
-  { key: "code", title: "合同编号" },
-  { key: "status", title: "合同状态" },
-  { key: "startAt", title: "开始时间" },
-  { key: "expiredAt", title: "到期时间" },
-  {
-    key: "operations",
-    title: "操作",
-    render(row: Contract) {
-      return h("div", {
-        class: "flex items-center gap-2"
-      }, [
-        h(NButton, {
-          type: "info",
-          quaternary: true,
-          size: "small",
-          onClick: () => {
-            console.debug(row)
-            infoModalShown.value = true
-          }
-        }, {
-          default: () => "查看"
-        }),
-      ])
+  ],
+  data: [
+    {
+      id: "1",
+      companyName: "企业名称",
+      employeeName: "所属销售",
+      industry: "行业",
+      code: "合同编号",
+      status: "合同状态",
+      startAt: "开始时间",
+      expiredAt: "到期时间",
+    },
+  ],
+  pagination: {
+    page: 1,
+    pageSize: 10,
+    pageCount: 1,
+  },
+})
+const expiredContractsTableProps = ref<TableProps<Contract>>({
+  columns: [
+    { key: "companyName", title: "企业名称" },
+    { key: "employeeName", title: "所属销售" },
+    { key: "code", title: "合同编号" },
+    { key: "status", title: "合同状态" },
+    { key: "startAt", title: "开始时间" },
+    { key: "expiredAt", title: "到期时间" },
+    {
+      key: "operations",
+      title: "操作",
+      render(row: Contract) {
+        return h("div", {
+          class: "flex items-center gap-2"
+        }, [
+          h(NButton, {
+            type: "info",
+            quaternary: true,
+            size: "small",
+            onClick: () => {
+              console.debug(row)
+              infoModalShown.value = true
+            }
+          }, {
+            default: () => "查看"
+          }),
+        ])
+      }
     }
-  }
-])
-const expiredContractsColumns = ref<DataTableColumns<Contract>>([
-  { key: "companyName", title: "企业名称" },
-  { key: "employeeName", title: "所属销售" },
-  { key: "code", title: "合同编号" },
-  { key: "status", title: "合同状态" },
-  { key: "startAt", title: "开始时间" },
-  { key: "expiredAt", title: "到期时间" },
-  {
-    key: "operations",
-    title: "操作",
-    render(row: Contract) {
-      return h("div", {
-        class: "flex items-center gap-2"
-      }, [
-        h(NButton, {
-          type: "info",
-          quaternary: true,
-          size: "small",
-          onClick: () => {
-            console.debug(row)
-            infoModalShown.value = true
-          }
-        }, {
-          default: () => "查看"
-        }),
-      ])
-    }
-  }
-])
-const data = ref<Contract[]>([])
-const availableContractsData = ref<Contract[]>([
-  {
-    id: "1",
-    companyName: "康多公司",
-    employeeName: "张三",
-    industry: "电子科技",
-    code: "C202509120001",
-    startAt: "2025-09-12",
-    expiredAt: "2025-10-12",
+  ],
+  data: [
+    {
+      id: "1",
+      companyName: "企业名称",
+      employeeName: "所属销售",
+      industry: "行业",
+      code: "合同编号",
+      status: "合同状态",
+      startAt: "开始时间",
+      expiredAt: "到期时间",
+    },
+  ],
+  pagination: {
+    page: 1,
+    pageSize: 10,
+    pageCount: 1,
   },
-])
-const runningContractsData = ref<Contract[]>([
-  {
-    id: "1",
-    companyName: "企业名称",
-    employeeName: "所属销售",
-    industry: "行业",
-    code: "合同编号",
-    status: "合同状态",
-  },
-])
-const close2expiredContractsData = ref<Contract[]>([
-  {
-    id: "1",
-    companyName: "企业名称",
-    employeeName: "所属销售",
-    industry: "行业",
-    code: "合同编号",
-    status: "合同状态",
-    startAt: "开始时间",
-    expiredAt: "到期时间",
-  },
-])
-const expiredContractsData = ref<Contract[]>([
-  {
-    id: "1",
-    companyName: "企业名称",
-    employeeName: "所属销售",
-    industry: "行业",
-    code: "合同编号",
-    status: "合同状态",
-    startAt: "开始时间",
-    expiredAt: "到期时间",
-  },
-])
-const pagination = ref<PaginationProps>({
-  page: 1,
-  pageSize: 10,
-  pageCount: 1,
 })
 const infoModalShown = ref(false)
+const infoModalDescription = ref<{ label: string, key: string, value: string | number }[]>([
+  { label: "合同编号", key: "id", value: "康多公司" },
+  { label: "有效期", key: "expiredAt", value: "2025-10-12 至 2025-10-12" },
+  { label: "套餐价格", key: "price", value: "210 元/人/月" },
+  { label: "费用支付", key: "payment", value: "按月度/月初" }
+])
+const timeline = ref<{ type: "success" | "error" | "warning" | "info", title: string, content?: string, time?: string }[]>([
+  { type: "success", title: "合同资料上传", content: "张三", time: "2024-07-20 15:26:31" },
+  { type: "success", title: "合同审批", content: "李四", time: "2024-07-21 15:26:31" },
+  { type: "success", title: "合同签署", content: "李四", time: "2024-07-21 15:35:12" },
+  { type: "success", title: "正式合作" },
+])  
 
 const loadData = () => {
   // TODO: 加载数据
-  columns.value = availableContractsColumns.value
-  data.value = availableContractsData.value
-}
-
-const handleTabUpdate = (key: string) => {
-  currentTab.value = key
-  switch (key) {
-    case "available":
-      columns.value = availableContractsColumns.value
-      data.value = availableContractsData.value
-      break
-    case "running":
-      columns.value = runningContractsColumns.value
-      data.value = runningContractsData.value
-      break
-    case "close2expired":
-      columns.value = close2expiredContractsColumns.value
-      data.value = close2expiredContractsData.value
-      break
-    case "expired":
-    default:
-      columns.value = expiredContractsColumns.value
-      data.value = expiredContractsData.value
-      break
-  }
 }
 
 onMounted(() => {
@@ -233,171 +287,51 @@ onMounted(() => {
 
 <template>
   <!-- 标签只切换表单，表格使用数据源和列源来控制 -->
-  <div class="h-full flex flex-col gap-[10px] p-[10px]! bg-[#F7F8FA]">
-    <n-card>
-      <n-tabs v-model:value="currentTab" :on-update:value="handleTabUpdate" animated>
-        <n-tab-pane name="available" tab="有效合同">
-          <div class="flex min-w-0">
-            <n-form :model="form" class="flex-grow-1 flex-shrink-0" label-placement="left" inline>
-              <n-form-item label="企业名称" path="companyName">
-                <n-input v-model="form.companyName" />
-              </n-form-item>
-              <n-form-item label="所属销售" path="employeeName">
-                <n-input v-model="form.employeeName" />
-              </n-form-item>
-              <n-form-item label="合同编号" path="contractId">
-                <n-input v-model="form.contractId" />
-              </n-form-item>
-            </n-form>
-            <div class="flex-shrink-0 flex gap-[10px] min-w-[150px]">
-              <n-button type="primary">查询</n-button>
-              <n-button>重置</n-button>
-            </div>
-          </div>
-        </n-tab-pane>
-        <n-tab-pane name="running" tab="在途合同">
-          <div class="flex min-w-0">
-            <n-form :mode="form" class="flex-grow-1 flex-shrink-0" label-placement="left" inline>
-              <n-form-item label="企业名称" path="companyName">
-                <n-input v-model="form.companyName" />
-              </n-form-item>
-              <n-form-item label="所属销售" path="employeeName">
-                <n-input v-model="form.employeeName" />
-              </n-form-item>
-              <n-form-item label="合同状态" path="contractStatus">
-                <n-input v-model="form.contractStatus" />
-              </n-form-item>
-            </n-form>
-            <div class="flex-shrink-0 flex gap-[10px] min-w-[150px]">
-              <n-button type="primary">查询</n-button>
-              <n-button>重置</n-button>
-            </div>
-          </div>
-        </n-tab-pane>
-        <n-tab-pane name="close2expired" tab="将到期合同">
-          <div class="flex min-w-0">
-            <n-form :model="form" class="flex-grow-1 flex-shrink-0" label-placement="left" inline>
-              <n-form-item label="企业名称" path="companyName">
-                <n-input v-model="form.companyName" />
-              </n-form-item>
-              <n-form-item label="所属销售" path="employeeName">
-                <n-input v-model="form.employeeName" />
-              </n-form-item>
-              <n-form-item label="合同状态" path="contractStatus">
-                <n-input v-model="form.contractStatus" />
-              </n-form-item>
-            </n-form>
-            <div class="flex-shrink-0 flex gap-[10px] min-w-[150px]">
-              <n-button type="primary">查询</n-button>
-              <n-button>重置</n-button>
-            </div>
-          </div>
-        </n-tab-pane>
-        <n-tab-pane name="expired" tab="过期合同">
-          <div class="flex min-w-0">
-            <n-form :model="form" class="flex-grow-1 flex-shrink-0" label-placement="left" inline>
-              <n-form-item label="企业名称" path="companyName">
-                <n-input v-model="form.companyName" />
-              </n-form-item>
-              <n-form-item label="所属销售" path="employeeName">
-                <n-input v-model="form.employeeName" />
-              </n-form-item>
-              <n-form-item label="合同状态" path="contractStatus">
-                <n-input v-model="form.contractStatus" />
-              </n-form-item>
-            </n-form>
-            <div class="flex-shrink-0 flex gap-[10px] min-w-[150px]">
-              <n-button type="primary">查询</n-button>
-              <n-button>重置</n-button>
-            </div>
-          </div>
-        </n-tab-pane>
-      </n-tabs>
-    </n-card>
-    <n-card class="flex-grow-1">
-      <n-data-table :columns="columns" :data="data" :pagination="pagination" class="h-full" />
-    </n-card>
-    <lay-layer v-model:model-value="infoModalShown" title="合同详情" resize>
-      <template #default>
-        <div class="min-w-[800px] w-full">
-          <n-card>
-            <div class="w-full flex items-center gap-[10px]">
-              <n-icon class="cursor-pointer" @click="infoModalShown = false">
-                <ArrowBackUp />
-              </n-icon>
-              <span class="text-[#4E5969] cursor-pointer" @click="infoModalShown = false">返回</span>
-            </div>
-            <n-timeline class="w-full mt-[20px]! select-none" horizontal>
-              <n-timeline-item 
-                type="success"
-                title="合同资料上传"
-                content="张三"
-                time="2024-07-20 15:26:31"
-              />
-              <n-timeline-item 
-                type="success"
-                title="合同审批"
-                content="李四"
-                time="2024-07-21 15:26:31"
-              />
-              <n-timeline-item 
-                type="success"
-                title="合同签署"
-                content="李四"
-                time="2024-07-21 15:35:12"
-              />
-              <n-timeline-item 
-                type="success"
-                title="正式合作"
-              />
-            </n-timeline>
-            <div class="w-full grid grid-cols-2 grid-rows-2 gap-[20px] my-[20px]!">
-              <div class="col-start-1 col-end-2 row-start-1 row-end-2 flex description">
-                <label>合同编码</label>
-                <span>C202509120001</span>
-              </div>
-              <div class="col-start-2 col-end-3 row-start-1 row-end-2 flex description">
-                <label>有效期</label>
-                <span>2025-09-12 至 2025-10-12</span>
-              </div>
-              <div class="col-start-1 col-end-2 row-start-2 row-end-3 flex description">
-                <label>套餐价格</label>
-                <span>210元/人/月</span>
-              </div>
-              <div class="col-start-2 col-end-3 row-start-2 row-end-3 flex description">
-                <label>费用支付</label>
-                <span>按月度/月初</span>
-              </div>
-            </div>
-            <div class="flex min-h-[400px] h-auto description">
-              <label>合同内容</label>
-              <embed class="flex-grow-1" src="https://philpapers.org/archive/sinpg" />
-            </div>
-          </n-card>
-        </div>
-      </template>
-    </lay-layer>
+  <div id="contract-list" class="h-full relative flex flex-col gap-[10px] p-[10px]! bg-[#F7F8FA]">
+    <n-tabs>
+      <n-tab-pane name="available" tab="有效合同">
+        <data-table-panel 
+          :table-props="availableContractsTableProps"
+          :form-items="availableContractsFormItems"
+        />
+      </n-tab-pane>
+      <n-tab-pane name="running" tab="运行中合同">
+        <data-table-panel 
+          :table-props="runningContractsTableProps" 
+          :form-items="runningContractsFormItems"
+        />
+      </n-tab-pane>
+      <n-tab-pane name="close2expired" tab="即将到期合同">
+        <data-table-panel 
+          :table-props="close2expiredContractsTableProps" 
+          :form-items="close2expiredContractsFormItems" 
+        />
+      </n-tab-pane>
+      <n-tab-pane name="expired" tab="已到期合同">
+        <data-table-panel 
+          :table-props="expiredContractsTableProps" 
+          :form-items="expiredContractsFormItems" 
+        />
+      </n-tab-pane>
+    </n-tabs>
+    <contract-desc-layer
+      v-model:model-value="infoModalShown"
+      :description="infoModalDescription"
+      :timeline="timeline"
+    />
   </div>
 </template>
 
 <style scoped>
-.description label {
-  @apply text-[#4E5969] w-[5rem] select-none;
+:deep(.n-tabs) {
+  @apply h-full flex-grow-1;
 }
 
-.description span {
-  @apply flex-grow-1 border-b border-[#D9D9D9] select-none;
+:deep(.n-tabs-nav) {
+  @apply pl-[10px]! select-none;
 }
 
-:deep(.n-form--inline) {
-  width: auto !important;
-}
-
-:deep(.n-form-item) {
-  min-width: 350px;
-}
-
-:deep(.n-timeline-item) {
-  flex: 1;
+:deep(.n-tab-pane) {
+  @apply h-full flex-grow-1 pt-[0]!;
 }
 </style>
