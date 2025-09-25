@@ -33,6 +33,16 @@ const router = createRouter({
               name: "ParticularsCustomer",
               path: "customer",
               component: () => import("@/views/index/particulars/ParticularsCustomer.vue")
+            },
+            {
+              name: "ParticularsApplying",
+              path: "applying",
+              component: () => import("@/views/index/particulars/ParticularsApplying.vue")
+            },
+            {
+              name: "RefusedParticularsApplying",
+              path: "refused-applying",
+              component: () => import("@/views/index/particulars/RefusedParticularsApplying.vue")
             }
           ]
         },

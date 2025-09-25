@@ -4,11 +4,12 @@ import { NInput, NButton } from "naive-ui"
 
 import DataTablePanel from "@/components/data/DataTablePanel.vue"
 import type { FormItems, TableProps } from "@/defined/component-prop"
-import type { Customer } from "@/defined/particulars"
+import type { RefusedParticularApplying } from "@/defined/particulars"
 
 const formValues = ref({
   companyName: "",
   employeeName: "",
+  refusedStage: "",
 })
 const formItems = ref<FormItems>([
   {
@@ -17,12 +18,17 @@ const formItems = ref<FormItems>([
     component: NInput,
   },
   {
+    key: "refusedStage",
+    label: "驳回阶段",
+    component: NInput,
+  },
+  {
     key: "employeeName",
     label: "所属销售",
     component: NInput,
   },
 ])
-const tableProps = ref<TableProps<Customer>>({
+const tableProps = ref<TableProps<RefusedParticularApplying>>({
   columns: [
     {
       title: "公司名称",
@@ -33,25 +39,25 @@ const tableProps = ref<TableProps<Customer>>({
       key: "industry",
     },
     {
-      title: "报备线路",
-      key: "reportLine",
+      title: "驳回阶段",
+      key: "refusedStage"
+    },
+    {
+      title: "驳回原因",
+      key: "refusedReason"
+    },
+    {
+      title: "驳回时间",
+      key: "refusedAt"
     },
     {
       title: "所属销售",
       key: "employeeName"
     },
     {
-      title: "合作情况",
-      key: "status"
-    },
-    {
-      title: "创建时间",
-      key: "createAt"
-    },
-    {
       title: "操作",
       key: "operation",
-      width: 220,
+      width: 180,
       render: (_row) => {
         return h("div", {
           class: "flex items-center gap-[10px]"
@@ -74,13 +80,6 @@ const tableProps = ref<TableProps<Customer>>({
           }, {
             default: () => "编辑"
           }),
-          h(NButton, {
-            type: "error",
-            quaternary: true,
-            size: "small",
-          }, {
-            default: () => "上传"
-          }),
         ])
       }
     }
@@ -90,9 +89,9 @@ const tableProps = ref<TableProps<Customer>>({
       companyName: "康多公司",
       employeeName: "张三",
       industry: "电子科技",
-      reportLine: "报备线路",
-      status: "合作中",
-      createAt: "2025-09-12",
+      refusedStage: "已驳回",
+      refusedReason: "驳回原因",
+      refusedAt: "2025-09-12",
     },
   ],
   pagination: {

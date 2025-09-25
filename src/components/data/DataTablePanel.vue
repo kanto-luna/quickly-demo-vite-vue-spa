@@ -62,7 +62,14 @@ const handleReset = () => {
       </div>
     </n-card>
     <n-card class="flex-grow-1">
-      <n-data-table :columns="tableProps.columns" :data="tableProps.data" :pagination="tableProps.pagination" class="h-full" />
+      <div class="h-full flex flex-col gap-[10px]">
+        <div class="flex-shrink-0">
+          <slot name="table-header" />
+        </div>
+        <div class="flex-grow-1">
+          <n-data-table :columns="tableProps.columns" :data="tableProps.data" :pagination="tableProps.pagination" class="h-full" />
+        </div>
+      </div>
     </n-card>
   </div>
 </template>

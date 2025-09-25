@@ -49,6 +49,8 @@ const menuOptions = ref<Menu[]>([
     component: "/src/views/index/particulars/Particulars.vue",
     children: [
       { label: "客户资料", key: "particulars-customer", path: "/particulars/customer", name: "ParticularsCustomer", component: "/src/views/index/particulars/ParticularsCustomer.vue" },
+      { label: "申请资料", key: "particulars-applying", path: "/particulars/applying", name: "ParticularsApplying", component: "/src/views/index/particulars/ParticularsApplying.vue" },
+      { label: "驳回资料", key: "particulars-refused-applying", path: "/particulars/refused-applying", name: "RefusedParticularsApplying", component: "/src/views/index/particulars/RefusedParticularsApplying.vue" },
     ],
   },
   {

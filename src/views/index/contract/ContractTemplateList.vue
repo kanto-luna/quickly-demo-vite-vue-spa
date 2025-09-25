@@ -4,6 +4,7 @@ import type { Ref } from "vue"
 import { NInput, NButton } from "naive-ui"
 
 import DataTablePanel from "@/components/data/DataTablePanel.vue"
+import ContractTemplateEditLayer from "./layer/ContractTemplateEditLayer.vue"
 import type { FormItems, TableProps } from "@/defined/component-prop"
 import type { ContractTemplate } from "@/defined/contract"
 
@@ -54,9 +55,9 @@ const tableProps: Ref<TableProps<ContractTemplate>> = ref({
       width: 250,
       render: (row: ContractTemplate) => {
         return h("div", { class: "flex items-center gap-2" }, [
-          h(NButton, { type: "primary", size: "small", quaternary: true, onClick: () => { console.debug("查看", row) } }, "查看"),
-          h(NButton, { type: "warning", size: "small", quaternary: true, onClick: () => { console.debug("下载", row) } }, "根据模板创建"),
-          h(NButton, { type: "info", size: "small", quaternary: true, onClick: () => { console.debug("编辑", row) } }, "编辑"),
+          h(NButton, { type: "primary", size: "small", quaternary: true, onClick: () => { console.debug("查看", row) } }, { default: () => "查看" }),
+          h(NButton, { type: "warning", size: "small", quaternary: true, onClick: () => { console.debug("下载", row) } }, { default: () => "根据模板创建" }),
+          h(NButton, { type: "info", size: "small", quaternary: true, onClick: () => { console.debug("编辑", row) } }, { default: () => "编辑" }),
         ])
       }
     }
@@ -79,6 +80,7 @@ const tableProps: Ref<TableProps<ContractTemplate>> = ref({
     pageCount: 1,
   }
 })
+const editLayerShown = ref(false)
 
 const handleSearch = () => {
   console.debug("search: ", formValues.value)
@@ -93,13 +95,23 @@ const handleReset = () => {
 </script>
 
 <template>
-  <DataTablePanel
-    v-model:form-values="formValues"
-    :form-items="formItems"
-    :table-props="tableProps"
-    @search="handleSearch"
-    @reset="handleReset"
-  />
+  <div id="contract-template-list" class="w-full h-full relative">
+    <data-table-panel
+      v-model:form-values="formValues"
+      :form-items="formItems"
+      :table-props="tableProps"
+      @search="handleSearch"
+      @reset="handleReset"
+    >
+      <template #table-header>
+        <n-button type="primary" @click="editLayerShown = true">新增</n-button>
+      </template>
+    </data-table-panel>
+    <contract-template-edit-layer 
+      v-model:model-value="editLayerShown"
+      :teleport="editLayerShown ? '#contract-template-list' : 'body'"
+    />
+  </div>
 </template>
 
 <style scoped>

@@ -5,7 +5,7 @@ import {
   NButton,
   NInput,
 } from "naive-ui"
-import { h } from "vue"
+import {h, shallowRef} from "vue"
 import { onMounted, ref } from "vue"
 
 import DataTablePanel from "@/components/data/DataTablePanel.vue"
@@ -13,7 +13,7 @@ import ContractDescLayer from "./layer/ContractDescLayer.vue"
 import type { Contract } from "@/defined/contract"
 import type { FormItems, TableProps } from "@/defined/component-prop"
 
-const availableContractsFormItems = ref<FormItems>([
+const availableContractsFormItems = shallowRef<FormItems>([
   {
     key: "companyName",
     label: "企业名称",
