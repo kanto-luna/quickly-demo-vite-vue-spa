@@ -1,20 +1,49 @@
-import type { Component } from "vue"
-import type { DataTableColumns, PaginationProps } from "naive-ui"
 
 // 表单项
-export type FormItem = {
+type FormItem = {
   key: string
   label: string
   component: Component
 }
-export type FormItems = FormItem[]
+type FormItems = FormItem[]
+
 // 表格项
-export type TableProps<T> = {
+type TableProps<T> = {
   columns: DataTableColumns<T>,
   data: T[],
   pagination: PaginationProps,
 }
 
+// 时间线
+type DataDescTimeline = {
+  props: TimelineProps,
+  items: TimelineItemProps[]
+}
+
+// 描述块
+type DataDesc = {
+  key: string
+  label?: string
+  value?: string | number | boolean | Component
+  span?: number
+}
+type DataDescs = DataDesc[]
+type DataDescSection = {
+  content: DataDescs
+  title?: string
+  cols?: number
+}
+type DataDescSections = DataDescSection[]
+
 declare module "@/defined/component-prop" {
-  export { FormItem, FormItems, TableProps }
+  export type { 
+    FormItem, 
+    FormItems, 
+    TableProps, 
+    DataDesc, 
+    DataDescs, 
+    DataDescSection, 
+    DataDescSections, 
+    DataDescTimeline 
+  }
 }

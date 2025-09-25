@@ -70,7 +70,7 @@ const emits = defineEmits(["update:modelValue"])
               :time="item.time"
             />
           </n-timeline>
-          <div class="w-full grid grid-cols-2 grid-rows-2 gap-[20px] my-[20px]!">
+          <div class="w-full grid grid-cols-auto grid-rows-auto gap-[20px] my-[20px]!">
             <div 
               v-for="(desc, index) in props.description"
               :key="desc.key"

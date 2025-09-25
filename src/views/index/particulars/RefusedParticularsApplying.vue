@@ -58,7 +58,7 @@ const tableProps = ref<TableProps<RefusedParticularApplying>>({
       title: "操作",
       key: "operation",
       width: 180,
-      render: (_row) => {
+      render: (_row: RefusedParticularApplying) => {
         return h("div", {
           class: "flex items-center gap-[10px]"
         }, [

@@ -8,8 +8,11 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    DataDescPanel: typeof import('./src/components/data/DataDescPanel.vue')['default']
     DataTablePanel: typeof import('./src/components/data/DataTablePanel.vue')['default']
     NCard: typeof import('naive-ui')['NCard']
+    NTimeline: typeof import('naive-ui')['NTimeline']
+    NTimelineItem: typeof import('naive-ui')['NTimelineItem']
     NUpload: typeof import('naive-ui')['NUpload']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
