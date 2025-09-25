@@ -25,5 +25,5 @@
       "./src/defined"
     ]
   },
-  "include": ["vite.config.ts", "eslint.config.ts", "src/defined/**/*.d.ts"]
+  "include": ["vite.config.ts", "eslint.config.ts", "src/defined/**/*.d.ts", "*.d.ts"]
 }

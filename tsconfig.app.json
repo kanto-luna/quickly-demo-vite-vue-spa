@@ -25,6 +25,7 @@
     "src/**/*.ts", 
     "src/**/*.tsx", 
     "src/**/*.vue",
-    "src/defined/**/*.d.ts"
+    "src/defined/**/*.d.ts",
+    "*.d.ts"
   ]
 }

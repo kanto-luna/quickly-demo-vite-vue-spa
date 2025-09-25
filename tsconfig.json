@@ -12,6 +12,6 @@
     },
     "typeRoots": [
       "./src/defined"
-    ],
+    ]
   }
 }
