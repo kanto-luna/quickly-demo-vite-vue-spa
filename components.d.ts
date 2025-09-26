@@ -13,7 +13,6 @@ declare module 'vue' {
     FileUpdate: typeof import('./src/components/form/FileUpdate.vue')['default']
     LayerCloseBtn: typeof import('./src/components/button/LayerCloseBtn.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
-    NCard: typeof import('naive-ui')['NCard']
     NForm: typeof import('naive-ui')['NForm']
     NFormItem: typeof import('naive-ui')['NFormItem']
     NIcon: typeof import('naive-ui')['NIcon']

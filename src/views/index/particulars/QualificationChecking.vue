@@ -64,6 +64,7 @@ const tableProps = ref<TableProps<any>>({
 <template>
   <div class="w-full h-full relative">
     <data-table-panel :form-items="formItems" :table-props="tableProps" :form-values="formValues" />
+    
   </div>
 </template>
 

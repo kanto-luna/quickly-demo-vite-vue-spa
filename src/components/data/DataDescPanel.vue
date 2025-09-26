@@ -54,4 +54,16 @@ const props = defineProps({
 .description span {
   @apply flex-grow-1 border-b border-[#D9D9D9] select-none;
 }
+
+.col-span-2 {
+  @apply col-span-2;
+}
+
+.col-span-3 {
+  @apply col-span-3;
+}
+
+.col-span-4 {
+  @apply col-span-4;
+}
 </style>
