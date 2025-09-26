@@ -43,6 +43,21 @@ const router = createRouter({
               name: "RefusedParticularsApplying",
               path: "refused-applying",
               component: () => import("@/views/index/particulars/RefusedParticularsApplying.vue")
+            },
+            {
+              name: "SceneChecking",
+              path: "scene-checking",
+              component: () => import("@/views/index/particulars/SceneChecking.vue")
+            },
+            {
+              name: "QualificationChecking",
+              path: "qualification-checking",
+              component: () => import("@/views/index/particulars/QualificationChecking.vue")
+            },
+            {
+              name: "CompanyChecking",
+              path: "company-checking",
+              component: () => import("@/views/index/particulars/CompanyChecking.vue")
             }
           ]
         },

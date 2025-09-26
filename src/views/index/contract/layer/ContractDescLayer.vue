@@ -5,9 +5,9 @@ import {
   NCard,
   NTimeline,
   NTimelineItem,
-  NIcon,
 } from "naive-ui"
-import { ArrowBackUp } from "@vicons/tabler"
+
+import LayerCloseBtn from "@/components/button/LayerCloseBtn.vue"
 
 const props = defineProps({
   modelValue: {
@@ -54,12 +54,7 @@ const emits = defineEmits(["update:modelValue"])
     <template #default>
       <div class="min-w-[800px] w-full">
         <n-card>
-          <div class="w-full flex items-center gap-[10px]">
-            <n-icon class="cursor-pointer" @click="emits('update:modelValue', false)">
-              <ArrowBackUp />
-            </n-icon>
-            <span class="text-[#4E5969] cursor-pointer" @click="emits('update:modelValue', false)">返回</span>
-          </div>
+          <layer-close-btn @click="emits('update:modelValue', false)" />
           <n-timeline class="w-full mt-[20px]! select-none" horizontal>
             <n-timeline-item 
               v-for="item in props.timeline"

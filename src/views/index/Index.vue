@@ -51,6 +51,9 @@ const menuOptions = ref<Menu[]>([
       { label: "客户资料", key: "particulars-customer", path: "/particulars/customer", name: "ParticularsCustomer", component: "/src/views/index/particulars/ParticularsCustomer.vue" },
       { label: "申请资料", key: "particulars-applying", path: "/particulars/applying", name: "ParticularsApplying", component: "/src/views/index/particulars/ParticularsApplying.vue" },
       { label: "驳回资料", key: "particulars-refused-applying", path: "/particulars/refused-applying", name: "RefusedParticularsApplying", component: "/src/views/index/particulars/RefusedParticularsApplying.vue" },
+      { label: "场景审核", key: "particulars-scene-checking", path: "/particulars/scene-checking", name: "SceneChecking", component: "/src/views/index/particulars/SceneChecking.vue" },
+      { label: "资质审核", key: "particulars-qualification-checking", path: "/particulars/qualification-checking", name: "QualificationChecking", component: "/src/views/index/particulars/QualificationChecking.vue" },
+      { label: "公司审核", key: "particulars-company-checking", path: "/particulars/company-checking", name: "CompanyChecking", component: "/src/views/index/particulars/CompanyChecking.vue" },
     ],
   },
   {

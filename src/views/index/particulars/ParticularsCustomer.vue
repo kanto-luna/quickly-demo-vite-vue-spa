@@ -4,6 +4,7 @@ import { NInput, NButton, NImage } from "naive-ui"
 
 import DataTablePanel from "@/components/data/DataTablePanel.vue"
 import ParticularsDescLayer from "./layer/ParticularsDescLayer.vue"
+import ParticularsEditLayer from "./layer/ParticularsEditLayer.vue"
 import type { Customer } from "@/defined/particulars"
 import type { FormItems, TableProps, DataDescTimeline, DataDescSections } from "@/defined/component-prop"
 
@@ -72,6 +73,10 @@ const tableProps = ref<TableProps<Customer>>({
             type: "warning",
             quaternary: true,
             size: "small",
+            onClick: () => {
+              // TODO: 绑定编辑的值
+              editModalShown.value = true
+            }
           }, {
             default: () => "编辑"
           }),
@@ -222,22 +227,65 @@ const description = ref<DataDescSections>([
         key: "validityPeriod",
         value: "2025-09-12 至 2025-10-12",
         span: 2,
+      },
+      {
+        label: "合同预览",
+        key: "contractPreview",
+        value: h("embed", {
+          src: "https://philpapers.org/archive/sinpg",
+          width: "100%",
+          height: "800px",
+        }),
+        span: 2,
       }
     ],
     title: "合同资料",
     cols: 2,
+  },
+  {
+    content: [
+
+    ],
+    title: "线路资料",
+    cols: 2,
   }
 ])
+const editModalShown = ref(false)
+const editData = ref<ParticularCustomerFormItems | undefined>(undefined)
+
+const handleSearchReset = () => {
+  formValues.value = {
+    companyName: "",
+    employeeName: "",
+  }
+}
 </script>
 
 <template>
   <div class="w-full h-full relative" id="particulars-customer">
-    <data-table-panel :form-items="formItems" :table-props="tableProps" :form-values="formValues" />
+    <data-table-panel 
+      :form-items="formItems" 
+      :table-props="tableProps" 
+      :form-values="formValues"
+      @reset="handleSearchReset"
+    >
+      <template #table-header>
+        <div class="w-full flex">
+          <n-button type="success" @click="editModalShown = true">新增</n-button>
+          <n-button class="ml-auto!">导出</n-button>
+      </div>
+      </template>
+    </data-table-panel>
     <particulars-desc-layer 
       v-model:model-value="infoModalShown" 
       :timeline="timeline" 
       :description="description" 
       :teleport="infoModalShown ? '#particulars-customer' : 'body'"
+    />
+    <particulars-edit-layer 
+      v-model:model-value="editModalShown"
+      :edit-data="editData"
+      :teleport="editModalShown ? '#particulars-customer' : 'body'"
     />
   </div>
 </template>

@@ -1,7 +1,9 @@
 <script lang="ts" setup>
 import type { PropType } from "vue"
 import { LayLayer } from "@layui/layer-vue"
+
 import DataDescPanel from "@/components/data/DataDescPanel.vue"
+import LayerCloseBtn from "@/components/button/LayerCloseBtn.vue"
 import type { DataDescTimeline, DataDescSections } from "@/defined/component-prop"
 
 const props = defineProps({
@@ -49,6 +51,7 @@ const emits = defineEmits(["update:modelValue"])
   >
     <template #default>
       <div class="min-w-[800px] w-full">
+        <layer-close-btn class="m-[10px]!" @click="emits('update:modelValue', false)" />
         <data-desc-panel :timeline="timeline" :descriptions="description" />
       </div>
     </template>  
