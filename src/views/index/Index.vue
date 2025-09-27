@@ -18,7 +18,6 @@ import {
 import { 
   LayoutSidebarLeftCollapse, 
   LayoutSidebarRightCollapse,
-  Backpack,
   Sunset,
   Sunrise,
 } from "@vicons/tabler"
@@ -36,7 +35,6 @@ const router = useRouter()
 const themeStore = useThemeStore()
 
 const sideIsCollapsed = ref(false)
-const theme = ref(themeStore.theme)
 const userDropdownOptions = ref([
   { label: "个人信息", key: "info" },
   { label: "退出登录", key: "logout" },
