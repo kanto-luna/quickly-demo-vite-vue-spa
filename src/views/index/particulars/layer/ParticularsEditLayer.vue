@@ -7,7 +7,9 @@ import { ChevronUp16Filled } from "@vicons/fluent"
 import FileUpdate from "@/components/form/FileUpdate.vue"
 import LayerCloseBtn from "@/components/button/LayerCloseBtn.vue"
 import type { ParticularCustomerFormItems } from "@/defined/particulars"
+import { useThemeStore } from "@/stores/theme-store"
 
+const themeStore = useThemeStore()
 const props = defineProps({
   modelValue: {
     type: Boolean,
@@ -114,16 +116,18 @@ watch(() => props.modelValue, () => {
   <lay-layer
     v-model:model-value="props.modelValue"
     @close="emits('update:model-value', false)"
+    :title-style="{ color: themeStore.theme === 'dark' ? 'var(--dark-primary-color)' : 'var(--light-primary-color)', backgroundColor: themeStore.theme === 'dark' ? 'var(--dark-secondary-bg-color)' : 'var(--light-secondary-bg-color)' }"
+    :layer-classes="themeStore.theme === 'dark' ? 'bg-[var(--dark-secondary-bg-color)]!' : 'bg-[var(--light-secondary-bg-color)]!'"
     :area="['100%', '100%']"
     :teleport="teleport"
     title="客户资料编辑"
   >
     <template #default>
-      <div class="w-full h-full box-border p-[10px]! flex flex-col relative" ref="editLayerRef">
+      <div class="w-full h-full box-border p-[10px]! flex flex-col relative" ref="editLayerRef" :class="themeStore.theme === 'dark' ? 'bg-[var(--dark-secondary-bg-color)]' : 'bg-[var(--light-secondary-bg-color)]'">
         <layer-close-btn class="my-[10px]! ml-[40px]!" @click="emits('update:model-value', false)" />
         <div class="flex-grow-1 overflow-y-auto">
           <div class="section">
-            <h3 class="ml-[40px]!">基本信息</h3>
+            <h3 class="ml-[40px]!" :class="themeStore.theme === 'dark' ? 'text-[var(--dark-primary-color)]' : 'text-[var(--light-primary-color)]'">基本信息</h3>
             <div class="w-full">
               <n-form 
                 label-placement="left" 
@@ -153,7 +157,7 @@ watch(() => props.modelValue, () => {
             </div>
           </div>
           <div class="section">
-            <h3 class="ml-[40px]!">合同资料</h3>
+            <h3 class="ml-[40px]!" :class="themeStore.theme === 'dark' ? 'text-[var(--dark-primary-color)]' : 'text-[var(--light-primary-color)]'">合同资料</h3>
             <div class="w-full">
               <n-form label-placement="left" label-align="right" label-width="200px" :rules="contractFormRules">
                 <n-form-item label="套餐价格" path="price">
@@ -169,7 +173,7 @@ watch(() => props.modelValue, () => {
             </div>
           </div>
           <div v-for="(item, index) in lineParticularsFormValueList" :key="`line-particulars-${index}`" class="section">
-            <h3 class="ml-[40px]!">线路资料</h3>
+            <h3 class="ml-[40px]!" :class="themeStore.theme === 'dark' ? 'text-[var(--dark-primary-color)]' : 'text-[var(--light-primary-color)]'">线路资料</h3>
             <div class="w-full">
               <n-form label-placement="left" label-align="right" label-width="200px" :rules="lineParticularsFormRules">
                 <n-form-item label="线路名称" path="lineName">
@@ -201,6 +205,6 @@ watch(() => props.modelValue, () => {
 }
 
 h3 {
-  @apply text-[#101010] text-[16px] leading-[23px];
+  @apply text-[16px] leading-[23px];
 }
 </style>

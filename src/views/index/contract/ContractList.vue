@@ -7,12 +7,14 @@ import {
 } from "naive-ui"
 import {h, shallowRef} from "vue"
 import { onMounted, ref } from "vue"
+import { useThemeStore } from "@/stores/theme-store"
 
 import DataTablePanel from "@/components/data/DataTablePanel.vue"
 import ContractDescLayer from "./layer/ContractDescLayer.vue"
 import type { Contract } from "@/defined/contract"
 import type { FormItems, TableProps } from "@/defined/component-prop"
 
+const themeStore = useThemeStore()
 const availableContractsFormItems = shallowRef<FormItems>([
   {
     key: "companyName",
@@ -287,7 +289,7 @@ onMounted(() => {
 
 <template>
   <!-- 标签只切换表单，表格使用数据源和列源来控制 -->
-  <div id="contract-list" class="h-full relative flex flex-col gap-[10px] p-[10px]! bg-[#F7F8FA]">
+  <div id="contract-list" class="h-full relative flex flex-col gap-[10px] p-[10px]!" :class="themeStore.theme === 'dark' ? 'bg-[var(--dark-primary-bg-color)]' : 'bg-[var(--light-primary-bg-color)]'">
     <n-tabs>
       <n-tab-pane name="available" tab="有效合同">
         <data-table-panel 

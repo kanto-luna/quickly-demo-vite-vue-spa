@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { ArrowBackUp } from "@vicons/tabler"
+import { useThemeStore } from "@/stores/theme-store"
 
+const themeStore = useThemeStore()
 const props = defineProps({
   text: {
     type: String,
@@ -17,7 +19,7 @@ const emits = defineEmits(["click"])
       <arrow-back-up />
     </n-icon>
     <slot name="default">
-      <span class="text-[#4E5969]">{{ props.text }}</span>
+      <span :class="themeStore.theme === 'dark' ? 'text-[var(--dark-primary-color)]' : 'text-[var(--light-primary-color)]'">{{ props.text }}</span>
     </slot>
   </div>
 </template>

@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+:root {
+  --light-primary-bg-color: #EFF0F2;
+  --light-secondary-bg-color: #FFFFFF;
+  --dark-primary-bg-color: #71797E;
+  --dark-secondary-bg-color: #18181C;
+  --light-primary-color: #101010;
+  --dark-primary-color: #FFFFFF;
+}
+
 .card {
   @apply bg-white rounded-lg shadow-md p-4;
 }

@@ -4,12 +4,14 @@ import {
   NDataTable,
 } from "naive-ui"
 import { onMounted, onUnmounted, ref } from "vue"
+import { useThemeStore } from "@/stores/theme-store"
 
 // off-duty time
 const offDutyTime = new Date() 
 offDutyTime.setHours(18, 0, 0, 0)
 const offDutyCountDown = ref("00:00:00")
 let timer: number | undefined = undefined
+const themeStore = useThemeStore()
 // total count
 const totalCounts = ref([
   { label: "在用客户", key: "userCount", value: 10 },
@@ -89,7 +91,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="h-full overflow-y-auto overflow-x-hidden bg-[#EFF0F2] scrollbar-hide">
+  <div class="h-full overflow-y-auto overflow-x-hidden scrollbar-hide" :class="themeStore.theme === 'dark' ? 'bg-[var(--dark-primary-bg-color)]' : 'bg-[var(--light-primary-bg-color)]'">
     <!-- 纵向布局流 -->
     <div class="w-full box-border flex flex-col p-[10px]! gap-[10px]">
       <!-- Slogen 和 下班时间 横向布局流 -->
@@ -97,19 +99,19 @@ onUnmounted(() => {
         <n-card class="flex-grow-2 min-w-[65%]">
           <div class="h-full flex items-center gap-[10px]">
             <img src="@/assets/views/index/home/worker.png" class="w-[98px] h-[81px]"/>
-            <span class="text-[18px] text-[#101010]">您好，系统已就绪，请开始新一天的工作</span>
+            <span class="text-[18px]">您好，系统已就绪，请开始新一天的工作</span>
           </div>
         </n-card>
         <n-card class="flex-grow-1 w-[400px]">
           <div class="h-full flex items-center gap-[10px]">
-            <span class="text-[18px] text-[#101010]">距离下班</span>
-            <span class="flex-grow-1 text-center text-[40px] text-[#101010]">{{ offDutyCountDown }}</span>
+            <span class="text-[18px]">距离下班</span>
+            <span class="flex-grow-1 text-center text-[40px]">{{ offDutyCountDown }}</span>
           </div>
         </n-card>
       </div>
       <!-- 主要数据看板 -->
       <div class="flex gap-[10px]">
-        <n-card v-for="(value, index) in totalCounts" :key="index" class="bg-[#FFFFFF] text-[#101010]" :class="index % 2 === 0 ? 'bg-[#141F1B]! text-[#84CAAD]!' : ''">
+        <n-card v-for="(value, index) in totalCounts" :key="index" :class="index % 2 === 0 ? 'bg-[#141F1B]! text-[#84CAAD]!' : ''">
           <div class="flex justify-between items-center">
             <div>{{ value.label }}</div>
             <div class="text-[24px]">{{ value.value }}</div>
@@ -164,7 +166,7 @@ onUnmounted(() => {
               <div>接通</div>
               <div class="flex-grow-1 flex overflow-auto gap-[10px]">
                 <div class="w-[248px] h-full">
-                  <n-card class="bg-[#E0E0E0]! opacity-[39]">
+                  <n-card class="opacity-[39]" :class="themeStore.theme === 'dark' ? 'bg-[var(--dark-secondary-bg-color)]' : 'bg-[var(--light-secondary-bg-color)]'">
                     <div class="flex flex-col">
                       <span>第一公司</span>
                       <span>余额</span>
@@ -178,7 +180,7 @@ onUnmounted(() => {
               <div>透支</div>
               <div class="flex-grow-1 flex overflow-auto gap-[10px]">
                 <div class="w-[248px] h-full">
-                  <n-card class="bg-[#E0E0E0]! opacity-[39]">
+                  <n-card class="opacity-[39]" :class="themeStore.theme === 'dark' ? 'bg-[var(--dark-secondary-bg-color)]' : 'bg-[var(--light-secondary-bg-color)]'">
                     <div class="flex flex-col">
                       <span>第一公司</span>
                       <span>余额</span>
@@ -192,7 +194,7 @@ onUnmounted(() => {
               <div>双重</div>
               <div class="flex-grow-1 flex overflow-auto gap-[10px]">
                 <div class="w-[248px] h-full">
-                  <n-card class="bg-[#E0E0E0]! opacity-[39]">
+                  <n-card class="opacity-[39]" :class="themeStore.theme === 'dark' ? 'bg-[var(--dark-secondary-bg-color)]' : 'bg-[var(--light-secondary-bg-color)]'">
                     <div class="flex flex-col">
                       <span>第一公司</span>
                       <span>余额</span>
@@ -206,7 +208,7 @@ onUnmounted(() => {
               <div class="flex-shrink-0">正常</div>
               <div class="flex-grow-1 flex overflow-auto gap-[10px] scrollbar-hide">
                 <div class="w-[248px] h-full flex-shrink-0">
-                  <n-card class="bg-[#E0E0E0]! opacity-[39]">
+                  <n-card class="opacity-[39]" :class="themeStore.theme === 'dark' ? 'bg-[var(--dark-secondary-bg-color)]' : 'bg-[var(--light-secondary-bg-color)]'">
                     <div class="flex flex-col">
                       <span>第一公司</span>
                       <span>余额</span>
@@ -215,7 +217,7 @@ onUnmounted(() => {
                   </n-card>
                 </div>
                 <div class="w-[248px] h-full flex-shrink-0">
-                  <n-card class="bg-[#E0E0E0]! opacity-[39]">
+                  <n-card class="opacity-[39]" :class="themeStore.theme === 'dark' ? 'bg-[var(--dark-secondary-bg-color)]' : 'bg-[var(--light-secondary-bg-color)]'">
                     <div class="flex flex-col">
                       <span>第二公司</span>
                       <span>余额</span>
@@ -224,7 +226,7 @@ onUnmounted(() => {
                   </n-card>
                 </div>
                 <div class="w-[248px] h-full flex-shrink-0">
-                  <n-card class="bg-[#E0E0E0]! opacity-[39]">
+                  <n-card class="opacity-[39]" :class="themeStore.theme === 'dark' ? 'bg-[var(--dark-secondary-bg-color)]' : 'bg-[var(--light-secondary-bg-color)]'">
                     <div class="flex flex-col">
                       <span>第二公司</span>
                       <span>余额</span>
@@ -233,7 +235,7 @@ onUnmounted(() => {
                   </n-card>
                 </div>
                 <div class="w-[248px] h-full flex-shrink-0">
-                  <n-card class="bg-[#E0E0E0]! opacity-[39]">
+                  <n-card class="opacity-[39]" :class="themeStore.theme === 'dark' ? 'bg-[var(--dark-secondary-bg-color)]' : 'bg-[var(--light-secondary-bg-color)]'">
                     <div class="flex flex-col">
                       <span>第二公司</span>
                       <span>余额</span>
@@ -242,7 +244,7 @@ onUnmounted(() => {
                   </n-card>
                 </div>
                 <div class="w-[248px] h-full flex-shrink-0">
-                  <n-card class="bg-[#E0E0E0]! opacity-[39]">
+                  <n-card class="opacity-[39]" :class="themeStore.theme === 'dark' ? 'bg-[var(--dark-secondary-bg-color)]' : 'bg-[var(--light-secondary-bg-color)]'">
                     <div class="flex flex-col">
                       <span>第二公司</span>
                       <span>余额</span>
@@ -251,7 +253,7 @@ onUnmounted(() => {
                   </n-card>
                 </div>
                 <div class="w-[248px] h-full flex-shrink-0">
-                  <n-card class="bg-[#E0E0E0]! opacity-[39]">
+                  <n-card class="opacity-[39]" :class="themeStore.theme === 'dark' ? 'bg-[var(--dark-secondary-bg-color)]' : 'bg-[var(--light-secondary-bg-color)]'">
                     <div class="flex flex-col">
                       <span>第二公司</span>
                       <span>余额</span>

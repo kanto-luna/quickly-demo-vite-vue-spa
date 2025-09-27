@@ -4,9 +4,11 @@ import { useRouter } from "vue-router"
 import { computed } from "vue"
 
 import { useAuthStore } from "@/stores/auth-store"
+import { useThemeStore } from "@/stores/theme-store"
 
 const router = useRouter()
 const authStore = useAuthStore()
+const themeStore = useThemeStore()
 
 const token = computed(() => authStore.token)
 
@@ -20,7 +22,7 @@ const goLogin = async () => {
 </script>
 
 <template>
-  <div class="h-screen flex items-center justify-center">
+  <div class="h-screen flex items-center justify-center" :class="themeStore.theme === 'dark' ? 'bg-[var(--dark-primary-bg-color)]' : 'bg-[var(--light-primary-bg-color)]'">
     <n-result
       status="403"
       title="403"

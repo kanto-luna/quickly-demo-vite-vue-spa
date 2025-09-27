@@ -6,9 +6,12 @@ import {
   NForm,
   NFormItem,
 } from "naive-ui"
+
+import { useThemeStore } from "@/stores/theme-store"
 import type { PropType } from "vue"
 import type { FormItems, TableProps } from "@/defined/component-prop"
 
+const themeStore = useThemeStore()
 const props = defineProps({
   formValues: {
     type: Object as PropType<any>,
@@ -46,7 +49,7 @@ const handleReset = () => {
 </script>
 
 <template>
-  <div class="w-full h-full flex flex-col gap-[10px] p-[10px]! bg-[#F7F8FA]">
+  <div class="w-full h-full flex flex-col gap-[10px] p-[10px]!" :class="themeStore.theme === 'dark' ? 'bg-[var(--dark-primary-bg-color)]' : 'bg-[var(--light-primary-bg-color)]'">
     <!-- 数据表单 -->
     <n-card>
       <div class="w-full flex items-center gap-[10px]">

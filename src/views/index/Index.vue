@@ -28,13 +28,15 @@ import { useRoute, useRouter } from "vue-router"
 import logo from "@/assets/vue.svg"
 import { isFullScreen, elementFullScreen, exitFullScreen } from "@/utils/ui/fullscreen"
 import type { Menu } from "@/defined/auth" 
+import { useThemeStore } from "@/stores/theme-store"
 
 const _m = useMessage()
 const route = useRoute()
 const router = useRouter()
+const themeStore = useThemeStore()
 
 const sideIsCollapsed = ref(false)
-const theme = ref("light")
+const theme = ref(themeStore.theme)
 const userDropdownOptions = ref([
   { label: "个人信息", key: "info" },
   { label: "退出登录", key: "logout" },
@@ -250,11 +252,11 @@ onMounted(() => {
           <n-icon class="ml-[16px]! cursor-pointer" size="24px" v-show="!isFullScreen" @click="handleFullScreenToggle">  
             <FullScreenMinimize24Filled />
           </n-icon>
-          <n-icon class="ml-[16px]!" size="24px">
+          <!-- <n-icon class="ml-[16px]!" size="24px">
             <Backpack />
-          </n-icon>
-          <n-icon class="ml-[16px]! cursor-pointer" size="24px" @click="theme = theme === 'light' ? 'dark' : 'light'">
-            <Sunset v-if="theme === 'light'" />
+          </n-icon> -->
+          <n-icon class="ml-[16px]! cursor-pointer" size="24px" @click="themeStore.theme = themeStore.theme === 'light' ? 'dark' : 'light'">
+            <Sunset v-if="themeStore.theme === 'light'" />
             <Sunrise v-else />
           </n-icon>
           <n-dropdown trigger="click" :options="userDropdownOptions" @select="handleUserDropdownSelect">

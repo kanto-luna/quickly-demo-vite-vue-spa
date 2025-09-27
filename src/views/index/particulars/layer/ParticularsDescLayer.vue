@@ -5,7 +5,9 @@ import { LayLayer } from "@layui/layer-vue"
 import DataDescPanel from "@/components/data/DataDescPanel.vue"
 import LayerCloseBtn from "@/components/button/LayerCloseBtn.vue"
 import type { DataDescTimeline, DataDescSections } from "@/defined/component-prop"
+import { useThemeStore } from "@/stores/theme-store"
 
+const themeStore = useThemeStore()
 const props = defineProps({
   modelValue: {
     type: Boolean,
@@ -47,10 +49,12 @@ const emits = defineEmits(["update:modelValue"])
     :teleport="teleport"
     :z-index="zIndex"
     :area="['100%', '100%']"
+    :title-style="{ color: themeStore.theme === 'dark' ? 'var(--dark-primary-color)' : 'var(--light-primary-color)', backgroundColor: themeStore.theme === 'dark' ? 'var(--dark-secondary-bg-color)' : 'var(--light-secondary-bg-color)' }"
+    :layer-classes="themeStore.theme === 'dark' ? 'bg-[var(--dark-secondary-bg-color)]!' : 'bg-[var(--light-secondary-bg-color)]!'"
     resize
   >
     <template #default>
-      <div class="min-w-[800px] w-full">
+      <div class="min-w-[800px] w-full" :class="themeStore.theme === 'dark' ? 'bg-[var(--dark-secondary-bg-color)]' : 'bg-[var(--light-secondary-bg-color)]'">
         <layer-close-btn class="m-[10px]!" @click="emits('update:modelValue', false)" />
         <data-desc-panel :timeline="timeline" :descriptions="description" />
       </div>
