@@ -8,11 +8,13 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    ContextMenu: typeof import('./src/components/contextmenu/ContextMenu.vue')['default']
     DataDescPanel: typeof import('./src/components/data/DataDescPanel.vue')['default']
     DataTablePanel: typeof import('./src/components/data/DataTablePanel.vue')['default']
     FileUpdate: typeof import('./src/components/form/FileUpdate.vue')['default']
     LayerCloseBtn: typeof import('./src/components/button/LayerCloseBtn.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
+    NCard: typeof import('naive-ui')['NCard']
     NForm: typeof import('naive-ui')['NForm']
     NFormItem: typeof import('naive-ui')['NFormItem']
     NIcon: typeof import('naive-ui')['NIcon']

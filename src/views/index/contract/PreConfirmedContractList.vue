@@ -20,7 +20,6 @@ const formValues: Ref<FormValues> = ref<FormValues>({
   id: "",
   status: "",
 })
-
 const formItems: Ref<FormItems> = ref<FormItems>([
   {
     key: "companyName",
@@ -51,7 +50,6 @@ const formItems: Ref<FormItems> = ref<FormItems>([
     })
   }
 ])
-
 const tableProps: Ref<TableProps<ContractBase>> = ref({
   columns: [
     {

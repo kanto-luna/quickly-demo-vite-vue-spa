@@ -75,7 +75,12 @@ const menuOptions = ref<Menu[]>([
 ])
 const currentTab = ref("home")
 const activateTabPanes = ref<Menu[]>([])
+const rootRef = ref<HTMLElement | null>(null)
 const contentRef = ref<HTMLElement | null>(null)
+const contextMenuShown = ref(false)
+const contextMenuX = ref(0)
+const contextMenuY = ref(0)
+const contextMenuKey = ref("")
 
 const handleUserDropdownSelect = async (key: string) => {
   switch (key) {
@@ -156,6 +161,53 @@ const handleTabChange = async (key: string) => {
   }
 }
 
+const handleTabContextmenu = (e: MouseEvent, key: string) => {
+  e.preventDefault()
+  contextMenuX.value = e.clientX
+  contextMenuY.value = e.clientY
+  contextMenuShown.value = true
+  contextMenuKey.value = key
+  const closeContextMenu = () => {
+    contextMenuShown.value = false
+    contextMenuKey.value = ""
+    rootRef.value?.removeEventListener("click", closeContextMenu)
+  }
+  rootRef.value?.addEventListener("click", closeContextMenu)
+}
+
+const handleContextMenuCloseTab = async () => {
+  await handleTabClose(contextMenuKey.value).catch(() => {})
+}
+
+const handleContextMenuCloseAll = async () => {
+  activateTabPanes.value = []
+  activateTabPanes.value.push({ key: "home", title: "工作台", name: "Home", path: "/home", component: "/src/views/index/home/Home.vue" })
+  currentTab.value = "home"
+  router.push("/home")
+}
+
+const handleContextMenuCloseRight = async () => {
+  let tabIdx = -1
+  let currentTabIdx = -1
+  activateTabPanes.value.forEach((tab, index) => {
+    if (tab.key === contextMenuKey.value) {
+      tabIdx = index
+    }
+    if (tab.key === currentTab.value) {
+      currentTabIdx = index
+    }
+  })
+  if (tabIdx !== -1) {
+    activateTabPanes.value.splice(tabIdx + 1)
+    console.debug(currentTabIdx, tabIdx, activateTabPanes.value)
+    if (currentTabIdx >= tabIdx) {
+      currentTab.value = activateTabPanes.value[tabIdx].key as string
+      console.debug(activateTabPanes.value[tabIdx])
+      router.push(activateTabPanes.value[tabIdx].path)
+    }
+  }
+}
+
 const initPage = () => {
   console.debug(route.fullPath)
   const tab = recursivelyFindTabFromMenuOpts(menuOptions.value, route.fullPath, "path")
@@ -174,7 +226,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="h-screen">
+  <div class="h-screen" ref="rootRef">
     <n-layout class="h-full">
       <n-layout-header class="h-[60px]" bordered>
         <div class="h-full flex items-center">
@@ -231,6 +283,7 @@ onMounted(() => {
               :key="tab.key as string" 
               :name="tab.key as string" 
               :tab="tab.title as string" 
+              @contextmenu="(e: MouseEvent) => handleTabContextmenu(e, tab.key as string)"
             />
           </n-tabs>
           <div class="flex-grow-1 overflow-hidden" ref="contentRef">
@@ -243,6 +296,14 @@ onMounted(() => {
         </n-layout-content>
       </n-layout>
     </n-layout>
+    <context-menu
+      v-model:model-value="contextMenuShown"
+      :x="contextMenuX"
+      :y="contextMenuY"
+      @close="handleContextMenuCloseTab"
+      @close-all="handleContextMenuCloseAll"
+      @close-right="handleContextMenuCloseRight"
+    />
   </div>
 </template>
 
