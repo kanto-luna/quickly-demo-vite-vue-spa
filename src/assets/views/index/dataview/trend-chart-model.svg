@@ -1,0 +1,20 @@
+<svg width="192" height="45" viewBox="0 0 192 45" xmlns="http://www.w3.org/2000/svg" style="--line-color: #2563eb;">
+  <!-- 主折线（实线）- 随机分布的极值点 -->
+  <polyline 
+    points="12.0,27.0 22.8,23.6 33.6,29.2 44.4,25.9 55.2,30.4 66.0,28.1 76.8,24.8 87.6,31.5 98.4,27.0 109.2,29.2 120.0,25.9 130.8,30.4 141.6,28.1 152.4,24.8 163.2,29.2 174.0,27.0 184.8,28.1" 
+    fill="none" 
+    stroke="var(--line-color)"
+    stroke-width="1"
+    stroke-linejoin="round"
+    stroke-linecap="round"/>
+  
+  <!-- 虚线折线（在实线上方） -->
+  <polyline 
+    points="12.0,22.5 22.8,19.1 33.6,24.8 44.4,21.4 55.2,25.9 66.0,23.6 76.8,20.2 87.6,27.0 98.4,22.5 109.2,24.8 120.0,21.4 130.8,25.9 141.6,23.6 152.4,20.2 163.2,24.8 174.0,22.5 184.8,23.6" 
+    fill="none" 
+    stroke="var(--line-color)"
+    stroke-width="1"
+    stroke-dasharray="8,4"
+    stroke-linejoin="round"
+    stroke-linecap="round"/>
+</svg>

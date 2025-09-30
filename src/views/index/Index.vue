@@ -41,6 +41,16 @@ const userDropdownOptions = ref([
 ])
 const menuOptions = ref<Menu[]>([
   { label: "工作台", key: "home", path: "/home", name: "home", component: "/src/views/index/home/Home.vue" },
+  {
+    label: "数据概览",
+    key: "dataview",
+    path: "/dataview",
+    name: "dataview",
+    component: "/src/views/index/dataview/DataCenter.vue",
+    children: [
+      { label: "数据中心", key: "dataview-data-center", path: "/dataview/data-center", name: "DataCenter", component: "/src/views/index/dataview/DataCenter.vue" },
+    ]
+  },
   { 
     label: "资料管理", 
     key: "particulars", 

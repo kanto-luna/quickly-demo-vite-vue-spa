@@ -9,10 +9,6 @@
   --dark-primary-color: #FFFFFF;
 }
 
-.card {
-  @apply bg-white rounded-lg shadow-md p-4;
-}
-
 .scrollbar-hide::-webkit-scrollbar {
   @apply hidden;
 }

@@ -19,10 +19,12 @@ import { computed, onMounted, ref, type Ref } from "vue"
 import { useRouter } from "vue-router"
 
 import { useAuthStore } from "@/stores/auth-store"
+import { useThemeStore } from "@/stores/theme-store"
 
 const _m = useMessage()
 const router = useRouter()
 const authStore = useAuthStore()
+const themeStore = useThemeStore()
 
 const passwordFormRef = ref<FormInst | null>(null)
 const phoneFormRef = ref<FormInst | null>(null)
@@ -147,7 +149,7 @@ const generateCaptcha = (canvasRef: Ref<HTMLCanvasElement | null>) => {
   ctx?.clearRect(0, 0, canvasRef.value.width, canvasRef.value.height)
   // 绘制验证码
   ctx!.font = "90px Arial"
-  ctx!.fillStyle = "#000000"
+  ctx!.fillStyle = themeStore.theme === 'dark' ? "#FFFFFF" : "#000000"
   const chars = generateCaptchaRdText()
   captchaChars.value = chars
   ctx!.textAlign = "center"
@@ -259,11 +261,11 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="h-screen flex flex-col items-center justify-center bg-gray-50">
-    <div class="text-2xl font-bold mb-4">
+  <div class="h-screen flex flex-col items-center justify-center" :class="themeStore.theme === 'dark' ? 'bg-[var(--dark-primary-bg-color)]' : 'bg-[var(--light-primary-bg-color)]'">
+    <div class="text-2xl font-bold mb-4" :class="themeStore.theme === 'dark' ? 'text-[var(--dark-primary-color)]' : 'text-[var(--light-primary-color)]'">
       Vue3 后台管理系统
     </div>
-    <div class="card w-[300px] md:w-[500px] pt-0!">
+    <div class="w-[300px] md:w-[500px] pt-0! shadow-md rounded-lg p-4!" :class="themeStore.theme === 'dark' ? 'bg-[var(--dark-secondary-bg-color)]' : 'bg-[var(--light-secondary-bg-color)]'">
       <div class="flex flex-col">
         <n-tabs type="line" @update:value="handleSwitchForm" animated>
           <n-tab-pane name="user-password" tab="密码登录">

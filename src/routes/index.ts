@@ -20,6 +20,18 @@ const router = createRouter({
           component: () => import("@/views/index/home/Home.vue")
         },
         {
+          name: "DataView",
+          path: "dataview",
+          // component: () => import("@/views/index/dataview/DataView.vue"),
+          children: [
+            {
+              name: "DataCenter",
+              path: "data-center",
+              component: () => import("@/views/index/dataview/DataCenter.vue")
+            }
+          ]
+        },
+        {
           name: "Particulars",
           path: "particulars",
           // component: () => import("@/views/index/particulars/Particulars.vue"),
